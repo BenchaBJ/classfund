@@ -3,256 +3,885 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>เงินกองกลางห้อง</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+<title>กองกลางห้อง ม.4/10 โรงเรียนเบญจมราชูทิศ จันทบุรี</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--tx:#1b2a3a;--mute:#6b7a8c;--pri:#2563eb;--ok:#16a34a;--bad:#dc2626;--ln:#e3e9f0}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Prompt,"Noto Sans Thai",sans-serif}
-main{max-width:480px;margin:0 auto;padding:16px}
-.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}
-h1{font-size:22px;margin:8px 0 14px}h2{font-size:17px;margin:0 0 10px}
-label{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
-input,button{font:inherit;width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--ln)}
-input[readonly]{background:var(--bg)}
-button{background:var(--pri);color:#fff;border:0;font-weight:600;margin-top:14px;cursor:pointer}
-button.ghost{background:#e8effd;color:var(--pri);margin-top:0}
-.hide{display:none}.sug{border:1px solid var(--ln);border-radius:10px;margin-top:4px;max-height:180px;overflow:auto}
-.sug div{padding:10px 12px;border-bottom:1px solid var(--ln);cursor:pointer}
-.big{font-size:32px;font-weight:600}.row{display:flex;gap:10px}.row>div{flex:1}
-.mini{border-radius:12px;padding:12px;background:var(--bg)}.mini b{display:block;font-size:19px}
-.tile{display:block;text-align:left;background:var(--card);color:var(--tx);border:0;border-radius:16px;padding:16px;margin:0 0 12px;box-shadow:0 1px 4px #0001}.tile small{display:block;font-weight:400;color:var(--mute);font-size:13px}
-.li{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--ln)}.li:last-child{border:0}textarea{font:inherit;width:100%}
-.in{color:var(--ok)}.out{color:var(--bad)}.mute{color:var(--mute);font-size:14px}
-.opts{display:flex;gap:8px}.opts label{flex:1;display:flex;align-items:center;gap:8px;margin:0;padding:10px;border:1px solid var(--ln);border-radius:10px;color:var(--tx)}
-.opts input{width:auto}
-#qr{width:100%;max-width:240px;display:block;margin:10px auto;border-radius:12px}
-#msg{color:var(--bad);font-size:14px;min-height:20px;margin-top:8px}
-.top{display:flex;justify-content:space-between;align-items:center}.top button{width:auto;margin:0;padding:6px 12px;background:#e8effd;color:var(--pri)}
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --tx: #1e293b;
+  --mute: #64748b;
+  --pri: #3b82f6;
+  --pri-dark: #2563eb;
+  --ok: #10b981;
+  --bad: #ef4444;
+  --ln: #e2e8f0;
+  --sidebar-w: 260px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--tx); font: 15/1.6 Prompt, sans-serif; }
+.hide { display: none !important; }
+
+/* หน้า Login สไตล์ Split Screen */
+#login-container {
+  min-height: 100vh;
+  display: flex;
+  background: #fff;
+}
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+  color: #fff;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login-left h1 { font-size: 32px; font-weight: 700; margin: 0 0 16px; }
+.login-left p { font-size: 16px; opacity: 0.9; line-height: 1.6; max-width: 480px; }
+.announcement-box {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.login-right {
+  width: 480px;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.login-right h2 { font-size: 24px; font-weight: 600; margin: 0 0 8px; color: var(--tx); }
+.login-right .sub { color: var(--mute); font-size: 14px; margin-bottom: 24px; }
+
+/* Layout หลักหลัง Login (Dashboard) */
+#app-container {
+  display: flex;
+  min-height: 100vh;
+}
+aside {
+  width: var(--sidebar-w);
+  background: #ffffff;
+  border-right: 1px solid var(--ln);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; bottom: 0; left: 0;
+  z-index: 10;
+}
+.sidebar-header {
+  padding: 20px;
+  border-bottom: 1px solid var(--ln);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sidebar-logo {
+  width: 40px; height: 40px; background: #e0e7ff; color: var(--pri);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 18px;
+}
+.sidebar-menu {
+  flex: 1; padding: 16px 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;
+}
+.menu-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px;
+  color: var(--mute); font-weight: 500; cursor: pointer; border: none; background: transparent; width: 100%; text-align: left;
+}
+.menu-item:hover, .menu-item.active {
+  background: #eff6ff; color: var(--pri);
+}
+.main-content {
+  flex: 1; margin-left: var(--sidebar-w); display: flex; flex-direction: column; min-width: 0;
+}
+header.topbar {
+  height: 70px; background: #fff; border-bottom: 1px solid var(--ln);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 32px;
+  position: sticky; top: 0; z-index: 9;
+}
+.user-profile {
+  display: flex; align-items: center; gap: 12px;
+}
+.user-avatar {
+  width: 38px; height: 38px; border-radius: 50%; background: #3b82f6; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 600; cursor: pointer;
+}
+content-body { padding: 32px; flex: 1; }
+
+/* การ์ดและคอมโพเนนต์ทั่วไป */
+.card {
+  background: var(--card); border-radius: 16px; padding: 24px; margin-bottom: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05); border: 1px solid var(--ln);
+}
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 24px; }
+.stat-card {
+  background: #fff; border-radius: 16px; padding: 20px; border: 1px solid var(--ln);
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--pri);
+}
+.stat-card.purple::before { background: #8b5cf6; }
+.stat-card.green::before { background: #10b981; }
+.stat-card.red::before { background: #ef4444; }
+.stat-card.amber::before { background: #f59e0b; }
+
+label { display: block; font-size: 14px; font-weight: 500; color: var(--tx); margin-bottom: 6px; }
+input, select, textarea {
+  font: inherit; width: 100%; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--ln);
+  background: #fff; color: var(--tx); outline: none; transition: border 0.2s; margin-bottom: 16px;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--pri); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+input[readonly] { background: #f8fafc; color: var(--mute); }
+
+button.btn {
+  font: inherit; font-weight: 600; padding: 12px 20px; border-radius: 10px; border: none;
+  background: var(--pri); color: #fff; cursor: pointer; transition: background 0.2s; width: 100%;
+}
+button.btn:hover { background: var(--pri-dark); }
+button.btn-outline { background: transparent; border: 1px solid var(--ln); color: var(--tx); }
+button.btn-outline:hover { background: #f8fafc; }
+
+.table-container { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+th, td { padding: 14px 16px; border-bottom: 1px solid var(--ln); }
+th { font-weight: 600; color: var(--mute); background: #f8fafc; }
+
+.badge { display: inline-block; padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 500; }
+.badge.amber { background: #fef3c7; color: #b45309; }
+.badge.green { background: #dcfce7; color: #15803d; }
+.badge.red { background: #fee2e2; color: #b91c1c; }
+
+.sug { position: absolute; background: #fff; border: 1px solid var(--ln); border-radius: 10px; width: 100%; max-height: 200px; overflow-y: auto; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+.sug div { padding: 10px 16px; cursor: pointer; border-bottom: 1px solid var(--ln); }
+.sug div:hover { background: #f8fafc; }
+
+@media(max-width: 900px) {
+  #login-container { flex-direction: column; }
+  .login-left { padding: 40px 20px; }
+  .login-right { width: 100%; padding: 40px 20px; }
+  aside { display: none; }
+  .main-content { margin-left: 0; }
+}
 </style>
 </head>
 <body>
-<main>
 
-<!-- ล็อกอิน -->
-<section id="login">
-  <h1>💰 กองกลางห้อง</h1>
-  <div class="card">
-    <label>ชื่อ-นามสกุล (พิมพ์ไม่กี่ตัวแล้วเลือก)</label>
-    <input id="name" autocomplete="off" placeholder="เช่น สม">
-    <div id="sug" class="sug hide"></div>
-    <label>เลขที่</label><input id="no" readonly>
-    <label>รหัส</label><input id="pw" type="password" inputmode="numeric">
-    <button id="go">เข้าสู่ระบบ</button>
-    <div id="msg"></div>
-  </div>
-</section>
-
-<!-- หน้าแรก: ภาพรวมของห้อง -->
-<section id="home" class="hide">
-  <div class="top"><h1>💰 กองกลางห้อง</h1><button id="out">ออก</button></div>
-  <div class="card">
-    <div class="mute">เงินคงเหลือของห้อง</div><div class="big" id="bal">-</div>
-    <div class="row" style="margin-top:10px">
-      <div class="mini"><span class="mute">รายได้</span><b class="in" id="inc">-</b></div>
-      <div class="mini"><span class="mute">รายจ่าย</span><b class="out" id="exp">-</b></div>
+<!-- 1. หน้าล็อกอิน (Split Screen สไตล์ระบบจัดการองค์กร) -->
+<div id="login-container">
+  <div class="login-left">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom: 24px;">
+        <div style="width:48px; height:48px; background:#fff; color:#3b82f6; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:22px;">💰</div>
+        <div>
+          <h2 style="margin:0; font-size:20px;">กองกลางห้อง ม.4/10</h2>
+          <p style="margin:0; font-size:13px; opacity:0.8;">โรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี</p>
+        </div>
+      </div>
+      <h1>ระบบบริหารจัดการกองกลางห้องเรียน</h1>
+      <p>จัดการการเงิน กองกลาง คำร้องเบิกจ่าย ยอดค้างชำระ และติดตามภาระงานในระบบเดียวอย่างโปร่งใส ตรวจสอบได้</p>
+    </div>
+    <div class="announcement-box">
+      <div style="font-weight:600; margin-bottom:6px; font-size:14px;">📌 ประกาศสำคัญจากห้อง</div>
+      <div id="login-announcement" style="font-size:13px; opacity:0.9;">ยินดีต้อนรับเข้าสู่ระบบกองกลางห้อง ม.4/10 กรุณาเข้าสู่ระบบด้วยชื่อและรหัสผ่านส่วนตัว</div>
     </div>
   </div>
-  <button class="tile" id="goPay">🔎 เช็คยอดจ่าย<small>ดูยอดของฉัน และจ่ายเงินผ่าน QR</small></button>
-  <button class="tile" id="goReq">📝 คำร้องซื้ออุปกรณ์ / เบิกเงิน<small>ส่งคำร้องพร้อมราคาและใบเสร็จ</small></button>
-  <button class="tile" id="goBuy">🛒 การซื้อของ<small>ดูว่าซื้ออะไร ราคาเท่าไร พร้อมหลักฐาน</small></button>
-  <button class="tile hide" id="goChg">🔒 เรียกเก็บเงิน<small>เฉพาะแอดมิน</small></button>
-</section>
-
-<!-- เช็คยอดจ่าย (ส่วนตัว) -->
-<section id="pay" class="hide">
-  <div class="top"><h1>เช็คยอดจ่าย</h1><button class="back">← กลับ</button></div>
-  <div class="card">
-    <div class="who mute"></div>
-    <div class="row" style="margin-top:10px">
-      <div class="mini"><span class="mute">ต้องจ่ายรวม</span><b id="fee">-</b></div>
-      <div class="mini"><span class="mute">จ่ายรวมแล้ว</span><b class="in" id="paid">-</b></div>
-      <div class="mini"><span class="mute">ค้างคงเหลือ</span><b class="out" id="due">-</b></div>
+  
+  <div class="login-right">
+    <h2>เข้าสู่ระบบ</h2>
+    <div class="sub">เลือกชื่อ-นามสกุล และใส่รหัสผ่านเพื่อเข้าใช้งาน</div>
+    
+    <div style="position:relative;">
+      <label>ชื่อ-นามสกุล (พิมพ์ค้นหาหรือเลือก)</label>
+      <input id="login-name" autocomplete="off" placeholder="เช่น สมชาย ใจดี">
+      <div id="sug" class="sug hide"></div>
     </div>
-    <h2 style="margin:16px 0 0">รายการเรียกเก็บ</h2><div id="chgList"></div>
-    <p class="mute" style="text-align:center;margin:14px 0 0">สแกน QR เพื่อจ่ายเงิน</p>
-    <img id="qr" alt="QR code">
+    
+    <label>เลขที่</label>
+    <input id="login-no" readonly placeholder="เลือกชื่อเพื่อเติมอัตโนมัติ">
+    
+    <label>รหัสผ่าน</label>
+    <input id="login-pw" type="password" placeholder="••••••••">
+    
+    <button class="btn" id="btn-login">เข้าสู่ระบบ</button>
+    <div id="login-msg" style="color:var(--bad); font-size:14px; margin-top:12px; text-align:center;"></div>
   </div>
-</section>
+</div>
 
-<!-- คำร้อง (ส่วนตัว) -->
-<section id="req" class="hide">
-  <div class="top"><h1>คำร้อง</h1><button class="back">← กลับ</button></div>
-  <div class="card">
-    <div class="who mute"></div>
-    <label>ประเภทคำร้อง</label>
-    <div class="opts">
-      <label><input type="radio" name="t" value="ซื้ออุปกรณ์" checked>ซื้ออุปกรณ์</label>
-      <label><input type="radio" name="t" value="เบิกเงิน">เบิกเงิน</label>
+<!-- 2. หน้าหลักแอปพลิเคชัน (Sidebar + Dashboard) -->
+<div id="app-container" class="hide">
+  <!-- Sidebar -->
+  <aside>
+    <div class="sidebar-header">
+      <div class="sidebar-logo">💰</div>
+      <div>
+        <div style="font-weight:700; font-size:15px;">กองกลาง ม.4/10</div>
+        <div style="font-size:12px; color:var(--mute);">เบญจมราชูทิศ จันทบุรี</div>
+      </div>
     </div>
-    <label>รายการ / เหตุผล</label><input id="item" placeholder="เช่น ไม้กวาด 2 อัน">
-    <label>ราคา (บาท)</label><input id="price" type="number" inputmode="decimal">
-    <label>ใบเสร็จ (รูปภาพ)</label><input id="rc" type="file" accept="image/*">
-    <button id="send">ส่งคำร้อง</button>
-    <div id="msg2" class="mute" style="margin-top:8px"></div>
-  </div>
-</section>
-<!-- การซื้อของ -->
-<section id="buy" class="hide">
-  <div class="top"><h1>การซื้อของ</h1><button class="back">← กลับ</button></div>
-  <div id="buyForm" class="card hide">
-    <h2>🔒 บันทึกการซื้อ (แอดมิน)</h2>
-    <label>วันที่</label><input id="bd" type="date">
-    <label>ซื้ออะไร</label><input id="bi">
-    <label>ราคา (บาท)</label><input id="bp" type="number" inputmode="decimal">
-    <label>แนบหลักฐาน (รูปภาพ)</label><input id="bf" type="file" accept="image/*">
-    <button id="bsend">บันทึก</button><div id="bmsg" class="mute" style="margin-top:8px"></div>
-  </div>
-  <div class="card"><div id="buyList"></div></div>
-</section>
+    <div class="sidebar-menu">
+      <button class="menu-item active" data-target="page-home">📊 หน้าแรกภาพรวม</button>
+      <button class="menu-item" data-target="page-pay">🔎 เช็คยอดจ่ายส่วนตัว</button>
+      <button class="menu-item" data-target="page-req">📝 คำร้องซื้อของ / เบิกเงิน</button>
+      <button class="menu-item" data-target="page-status">📋 สถานะคำร้อง</button>
+      <button class="menu-item" data-target="page-due">⚠️ ยอดค้างชำระ</button>
+      <button class="menu-item hide" id="menu-chg" data-target="page-admin-charge">🔒 เรียกเก็บเงิน / ปรับ</button>
+      <button class="menu-item" data-target="page-homework">📚 แจ้งและตรวจงาน</button>
+      <button class="menu-item" data-target="page-settings">⚙️ ตั้งค่าส่วนตัว</button>
+      <button class="menu-item hide" id="menu-audit" data-target="page-audit">🛡️ ประวัติการเข้าสู่ระบบ</button>
+    </div>
+  </aside>
 
-<!-- เรียกเก็บเงิน (แอดมินเท่านั้น) -->
-<section id="chg" class="hide">
-  <div class="top"><h1>เรียกเก็บเงิน</h1><button class="back">← กลับ</button></div>
-  <div class="card">
-    <div class="mute">🔒 แอดมินเท่านั้น · เมื่อกดตกลง ทุกคนจะมียอดค้างเพิ่มทันที</div>
-    <label>วันที่</label><input id="cd" type="date">
-    <label>เก็บเงินเพราะ</label><input id="cr" placeholder="เช่น เงินห้องประจำสัปดาห์">
-    <label>ประเภท</label>
-    <div class="opts">
-      <label><input type="radio" name="k" value="รายสัปดาห์" checked>รายสัปดาห์</label>
-      <label><input type="radio" name="k" value="เฉพาะกิจกรรม">เฉพาะกิจกรรม</label>
+  <!-- Main Content Area -->
+  <div class="main-content">
+    <header class="topbar">
+      <div id="topbar-title" style="font-weight:600; font-size:18px;">หน้าแรกภาพรวม</div>
+      <div class="user-profile">
+        <div style="text-align:right;">
+          <div id="user-display-name" style="font-weight:600; font-size:14px;">-</div>
+          <div id="user-display-role" style="font-size:12px; color:var(--mute);">-</div>
+        </div>
+        <div class="user-avatar" id="btn-logout" title="ออกจากระบบ">🚪</div>
+      </div>
+    </header>
+
+    <div style="padding:32px; overflow-y:auto; flex:1;">
+      
+      <!-- PAGE: หน้าแรก -->
+      <div id="page-home" class="page-section">
+        <div class="card" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe;">
+          <div style="color:var(--pri); font-weight:600; font-size:13px; margin-bottom:4px;">ประกาศห้องเรียน</div>
+          <div style="font-size:18px; font-weight:700; color:#1e3a8a;">นักเรียนมัธยมศึกษาโรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี ชั้น ม.4/10</div>
+          <div style="font-size:13px; color:#475569; margin-top:8px;">ระบบบริหารจัดการกองกลาง ตรวจสอบยอดเงิน คำร้อง และภาระงานห้องเรียนแบบเรียลไทม์</div>
+        </div>
+
+        <div class="grid-4">
+          <div class="stat-card">
+            <div style="color:var(--mute); font-size:13px;">เงินคงเหลือสุทธิ</div>
+            <div id="stat-balance" style="font-size:26px; font-weight:700; margin-top:6px;">฿0</div>
+          </div>
+          <div class="stat-card green">
+            <div style="color:var(--mute); font-size:13px;">รายรับห้องทั้งหมด</div>
+            <div id="stat-income" style="font-size:26px; font-weight:700; color:var(--ok); margin-top:6px;">฿0</div>
+          </div>
+          <div class="stat-card red">
+            <div style="color:var(--mute); font-size:13px;">รายจ่ายห้องทั้งหมด</div>
+            <div id="stat-expense" style="font-size:26px; font-weight:700; color:var(--bad); margin-top:6px;">฿0</div>
+          </div>
+          <div class="stat-card amber">
+            <div style="color:var(--mute); font-size:13px;">คำร้องรอดำเนินการ</div>
+            <div id="stat-pending-req" style="font-size:26px; font-weight:700; color:#d97706; margin-top:6px;">0 รายการ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: เช็คยอดจ่ายส่วนตัว -->
+      <div id="page-pay" class="page-section hide">
+        <div class="card">
+          <h3>เช็คยอดจ่ายเงินส่วนตัว</h3>
+          <div class="grid-4" style="margin-top:16px;">
+            <div class="stat-card">
+              <div style="color:var(--mute); font-size:13px;">ต้องจ่ายรวม</div>
+              <div id="pay-total-fee" style="font-size:22px; font-weight:700;">฿0</div>
+            </div>
+            <div class="stat-card green">
+              <div style="color:var(--mute); font-size:13px;">จ่ายแล้ว</div>
+              <div id="pay-total-paid" style="font-size:22px; font-weight:700; color:var(--ok);">฿0</div>
+            </div>
+            <div class="stat-card red">
+              <div style="color:var(--mute); font-size:13px;">ค้างชำระ</div>
+              <div id="pay-total-due" style="font-size:22px; font-weight:700; color:var(--bad);">฿0</div>
+            </div>
+          </div>
+          <h4 style="margin-top:24px;">รายการเรียกเก็บเงินห้อง</h4>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>วันที่</th><th>รายการ / เหตุผล</th><th>ประเภท</th><th>หมายเหตุ</th><th>จำนวนเงิน</th></tr></thead>
+              <tbody id="table-my-charges"><tr><td colspan="5" style="text-align:center; color:var(--mute);">ไม่มีรายการ</td></tr></tbody>
+            </table>
+          </div>
+          <div style="text-align:center; margin-top:24px;">
+            <p style="font-weight:600; margin-bottom:8px;">สแกน QR-Code เพื่อโอนเงินเข้ากองกลาง</p>
+            <img id="img-qr-pay" src="" alt="QR Code" style="max-width:200px; border-radius:12px; border:1px solid var(--ln);" class="hide">
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: คำร้องซื้อของ / เบิกเงิน -->
+      <div id="page-req" class="page-section hide">
+        <div class="card" style="max-width:600px; margin:0 auto;">
+          <h3>ยื่นคำร้อง (ซื้ออุปกรณ์ / เบิกเงิน)</h3>
+          <label>ประเภทคำร้อง</label>
+          <select id="req-type">
+            <option value="ซื้ออุปกรณ์">ซื้ออุปกรณ์ / ให้ซื้อ</option>
+            <option value="เบิกจ่ายเงิน">เบิกจ่ายเงิน</option>
+          </select>
+          <label>รายการ / รายละเอียด</label>
+          <input id="req-item" placeholder="เช่น ปากกาไวท์บอร์ด / ค่าถ่ายเอกสาร">
+          <label>จำนวนเงิน (บาท)</label>
+          <input id="req-amount" type="number" placeholder="0.00">
+          <label id="lbl-receipt">แนบบิล / ใบเสร็จ (บังคับสำหรับเบิกเงิน)</label>
+          <input id="file-receipt" type="file" accept="image/*">
+          <label>แนบรูป QR-Code ของผู้แจ้ง (สำหรับรับเงินคืน)</label>
+          <input id="file-qr" type="file" accept="image/*">
+          <button class="btn" id="btn-submit-req" style="margin-top:12px;">ส่งคำร้อง</button>
+          <div id="req-msg" style="margin-top:10px; font-size:14px; text-align:center;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: สถานะคำร้อง -->
+      <div id="page-status" class="page-section hide">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3>ติดตามสถานะคำร้องและความก้าวหน้า</h3>
+            <select id="filter-req-type" style="width:auto; margin:0;">
+              <option value="all">แสดงทั้งหมด (บ และ ข)</option>
+              <option value="บ">เฉพาะเบิกจ่ายเงิน (บ...)</option>
+              <option value="ข">เฉพาะซื้ออุปกรณ์/ให้ซื้อ (ข...)</option>
+            </select>
+          </div>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>รหัส</th><th>วันที่</th><th>ผู้ยื่น</th><th>ประเภท</th><th>รายการ</th><th>จำนวนเงิน</th><th>สถานะ</th><th>การจัดการ / รายละเอียด</th></tr></thead>
+              <tbody id="table-requests"><tr><td colspan="8" style="text-align:center; color:var(--mute);">ไม่มีข้อมูลคำร้อง</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ยอดค้างชำระ -->
+      <div id="page-due" class="page-section hide">
+        <div class="card">
+          <h3>รายการยอดค้างชำระทั้งหมด</h3>
+          <div class="table-container" style="margin-top:16px;">
+            <table>
+              <thead><tr><th>เลขที่</th><th>ชื่อ-นามสกุล</th><th>รายการ</th><th>ประเภท</th><th>ยอดเงินสุทธิ (รวมทบ)</th><th>กำหนด / หมายเหตุ</th></tr></thead>
+              <tbody id="table-unpaid"><tr><td colspan="6" style="text-align:center; color:var(--mute);">ไม่มีรายการค้างชำระ</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: แจ้งเรียกเก็บเงิน (แอดมิน) -->
+      <div id="page-admin-charge" class="page-section hide">
+        <div class="card" style="max-width:600px; margin:0 auto;">
+          <h3>🔒 แจ้งเรียกเก็บเงิน / ปรับเงิน (เฉพาะแอดมิน)</h3>
+          <label>ประเภทการเรียกเก็บ</label>
+          <select id="chg-kind">
+            <option value="รายสัปดาห์">รายสัปดาห์</option>
+            <option value="เฉพาะกิจกรรม">เฉพาะกิจกรรม</option>
+            <option value="ปรับ">ปรับ</option>
+          </select>
+          <label>เป้าหมายการเก็บ</label>
+          <select id="chg-target-mode">
+            <option value="all">เก็บทุกคนในห้อง</option>
+            <option value="one">เจาะจงรายบุคคล</option>
+          </select>
+          <div id="box-single-student" class="hide">
+            <label>เลือกนักเรียน (เลือกได้หรือระบุ)</label>
+            <select id="chg-student-no"></select>
+          </div>
+          <label>เหตุผล / รายละเอียด</label>
+          <input id="chg-reason" placeholder="เช่น เงินกองกลางประจำสัปดาห์ / ค่าทำความสะอาด">
+          <label>จำนวนเงินต่อคน (บาท)</label>
+          <input id="chg-amount" type="number" placeholder="20">
+          <div id="box-penalty-options" class="hide">
+            <label>กำหนดชำระภายใน (วัน)</label>
+            <input id="chg-due-days" type="number" placeholder="3">
+            <label>ทบยอดเงินเพิ่มทุก ๆ (วัน)</label>
+            <input id="chg-step-days" type="number" placeholder="1">
+          </div>
+          <label>หมายเหตุเพิ่มเติม</label>
+          <input id="chg-note" placeholder="-">
+          <button class="btn" id="btn-submit-charge" style="margin-top:12px;">ยืนยันการเรียกเก็บ</button>
+          <div id="chg-msg" style="margin-top:10px; text-align:center; font-size:14px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: เอกสารและงาน -->
+      <div id="page-homework" class="page-section hide">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3>รายการภาระงานและการบ้าน (15 รายวิชา)</h3>
+            <button class="btn" id="btn-open-hw-modal" style="width:auto;">+ แจ้งงานใหม่</button>
+          </div>
+          <label>เลือกดูรายวิชา</label>
+          <select id="select-subject-filter" style="margin-bottom:16px;">
+            <option value="all">--- ทุกรายวิชา ---</option>
+            <option value="วิทยาการคำนวณ(ว31103)">วิทยาการคำนวณ (ว31103)</option>
+            <option value="คอมพิวเตอร์(ว30265)">คอมพิวเตอร์ (ว30265)</option>
+            <option value="ภาษาอังกฤษ(อ31102)">ภาษาอังกฤษ (อ31102)</option>
+            <option value="ภาษาไทย(ท31102)">ภาษาไทย (ท31102)</option>
+            <option value="ภาษาจีน(จ30202)">ภาษาจีน (จ30202)</option>
+            <option value="คณิตศาสตร์พื้นฐาน(ค31102)">คณิตศาสตร์พื้นฐาน (ค31102)</option>
+            <option value="คณิตศาสตร์เพิ่มเติม(ค30202)">คณิตศาสตร์เพิ่มเติม (ค30202)</option>
+            <option value="วิทยาศาสตร์เคมี(ว30221)">วิทยาศาสตร์เคมี (ว30221)</option>
+            <option value="วิทยาศาสตร์ชีวะ(ว30241)">วิทยาศาสตร์ชีวะ (ว30241)</option>
+            <option value="วิทยาศาสตร์ฟิสิกส์(ว30201)">วิทยาศาสตร์ฟิสิกส์ (ว30201)</option>
+            <option value="สุขศึกษา-พละ(พ31102)">สุขศึกษา-พละ (พ31102)</option>
+            <option value="สังคมศึกษา(ส31102)">สังคมศึกษา (ส31102)</option>
+            <option value="พระพุทธศึกษา(ส31104)">พระพุทธศึกษา (ส31104)</option>
+            <option value="ภาษาอังกฤษเพิ่มเติม(อ30234)">ภาษาอังกฤษเพิ่มเติม (อ30234)</option>
+            <option value="แนะแนว">แนะแนว</option>
+          </select>
+          <div class="table-container">
+            <table>
+              <thead><tr><th>วิชา</th><th>ผู้แจ้ง</th><th>ทำที่ไหน</th><th>หน้าที่</th><th>กำหนดส่ง</th><th>ส่งที่ไหน</th><th>หมายเหตุ</th></tr></thead>
+              <tbody id="table-homeworks"><tr><td colspan="7" style="text-align:center; color:var(--mute);">ยังไม่มีข้อมูลงานในรายวิชานี้</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: ตั้งค่าส่วนตัว -->
+      <div id="page-settings" class="page-section hide">
+        <div class="card" style="max-width:500px; margin:0 auto;">
+          <h3>ตั้งค่าบัญชีผู้ใช้</h3>
+          <label>เปลี่ยนชื่อ-นามสกุลแสดงผล</label>
+          <input id="setting-new-name">
+          <button class="btn" id="btn-save-name">บันทึกชื่อใหม่</button>
+          <div id="setting-msg" style="margin-top:10px; text-align:center; font-size:14px;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: Audit Log (แอดมิน) -->
+      <div id="page-audit" class="page-section hide">
+        <div class="card">
+          <h3>🛡️ ประวัติการเข้าสู่ระบบ (Admin Audit Log)</h3>
+          <div class="table-container" style="margin-top:16px;">
+            <table>
+              <thead><tr><th>วันที่</th><th>เวลา</th><th>เลขที่</th><th>ชื่อ-นามสกุล</th><th>ตำแหน่ง</th></tr></thead>
+              <tbody id="table-audit-logs"><tr><td colspan="5" style="text-align:center; color:var(--mute);">ไม่มีข้อมูลประวัติ</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <label id="cnl">หมายเหตุ (ไม่บังคับ)</label><textarea id="cn" rows="2"></textarea>
-    <label>จำนวนเงินต่อคน (บาท)</label><input id="ca" type="number" inputmode="decimal">
-    <button id="csend">ตกลง เรียกเก็บทุกคน</button><div id="cmsg" class="mute" style="margin-top:8px"></div>
   </div>
-</section>
-</main>
+</div>
+
+<!-- Modal สำหรับแจ้งงานใหม่ -->
+<div id="modal-hw" class="hide" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
+  <div class="card" style="width:100%; max-width:500px; max-height:90vh; overflow-y:auto; background:#fff;">
+    <h3>แจ้งงาน / การบ้านใหม่</h3>
+    <label>เลือกรายวิชา</label>
+    <select id="hw-subject">
+      <option value="วิทยาการคำนวณ(ว31103)">วิทยาการคำนวณ (ว31103)</option>
+      <option value="คอมพิวเตอร์(ว30265)">คอมพิวเตอร์ (ว30265)</option>
+      <option value="ภาษาอังกฤษ(อ31102)">ภาษาอังกฤษ (อ31102)</option>
+      <option value="ภาษาไทย(ท31102)">ภาษาไทย (ท31102)</option>
+      <option value="ภาษาจีน(จ30202)">ภาษาจีน (จ30202)</option>
+      <option value="คณิตศาสตร์พื้นฐาน(ค31102)">คณิตศาสตร์พื้นฐาน (ค31102)</option>
+      <option value="คณิตศาสตร์เพิ่มเติม(ค30202)">คณิตศาสตร์เพิ่มเติม (ค30202)</option>
+      <option value="วิทยาศาสตร์เคมี(ว30221)">วิทยาศาสตร์เคมี (ว30221)</option>
+      <option value="วิทยาศาสตร์ชีวะ(ว30241)">วิทยาศาสตร์ชีวะ (ว30241)</option>
+      <option value="วิทยาศาสตร์ฟิสิกส์(ว30201)">วิทยาศาสตร์ฟิสิกส์ (ว30201)</option>
+      <option value="สุขศึกษา-พละ(พ31102)">สุขศึกษา-พละ (พ31102)</option>
+      <option value="สังคมศึกษา(ส31102)">สังคมศึกษา (ส31102)</option>
+      <option value="พระพุทธศึกษา(ส31104)">พระพุทธศึกษา (ส31104)</option>
+      <option value="ภาษาอังกฤษเพิ่มเติม(อ30234)">ภาษาอังกฤษเพิ่มเติม (อ30234)</option>
+      <option value="แนะแนว">แนะแนว</option>
+    </select>
+    <label>ทำที่ไหน</label>
+    <select id="hw-where">
+      <option value="สมุด">สมุด</option>
+      <option value="ชีท">ชีท</option>
+      <option value="หนังสือ">หนังสือ</option>
+      <option value="แอป Classroom">แอป Classroom</option>
+    </select>
+    <label id="lbl-hw-page">หน้าที่</label>
+    <input id="hw-page" placeholder="เช่น หน้า 45-46">
+    <label>วันกำหนดส่ง</label>
+    <input id="hw-due-date" type="date">
+    <label>ส่งที่ไหน (ช่องทางส่ง)</label>
+    <input id="hw-submit-at" placeholder="เช่น ส่งที่โต๊ะหัวหน้าห้อง / Google Classroom">
+    <label>หมายเหตุ (ไม่บังคับ)</label>
+    <input id="hw-note" placeholder="-">
+    <div style="display:flex; gap:10px; margin-top:16px;">
+      <button class="btn" id="btn-save-hw">บันทึกแจ้งงาน</button>
+      <button class="btn btn-outline" id="btn-close-hw">ยกเลิก</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal สำหรับแอดมินอนุมัติคำร้อง หรือกรอกรหัสชั้นที่ 2 -->
+<div id="modal-admin-prompt" class="hide" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:1000;">
+  <div class="card" style="width:100%; max-width:400px; background:#fff;">
+    <h3 id="adm-modal-title">ยืนยันรหัสแอดมินชั้นที่ 2</h3>
+    <label>รหัสผ่านแอดมิน</label>
+    <input id="adm-input-pw" type="password" placeholder="••••">
+    <div style="display:flex; gap:10px; margin-top:16px;">
+      <button class="btn" id="adm-modal-confirm">ยืนยัน</button>
+      <button class="btn btn-outline" id="adm-modal-cancel">ยกเลิก</button>
+    </div>
+    <div id="adm-modal-msg" style="color:var(--bad); font-size:13px; margin-top:8px; text-align:center;"></div>
+  </div>
+</div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbyzKsmlvyvZrpuLUt_6gD4jmJcnlhSmWfUw2CJJwqRFtV8w6RHURiyDz0-M_pjOpOGD/exec"; // ← วาง Web App URL จาก Apps Script ตรงนี้ (ว่างไว้ = โหมดตัวอย่าง รหัส 1234)
+const API = ""; // ← วาง Web App URL จาก Google Apps Script ที่นี่ (ถ้าว่างจะรัน Mockup อัตโนมัติ)
 const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
 const baht = n => "฿" + Number(n || 0).toLocaleString("th-TH");
-let me = null, students = [];
 
-async function call(a, p = {}) {
-  if (!API) return demo(a, p);
-  const r = await fetch(API, { method: "POST", body: JSON.stringify({ a, ...p }) });
-  return r.json();
-}
-const DB = { purchases: [{ date: "10/11/2026", item: "ไม้กวาด", price: 120, url: "" }], charges: [{ date: "1/11/2026", reason: "เงินห้องประจำสัปดาห์", kind: "รายสัปดาห์", note: "", amount: 20 }] };
-function demo(a, p) {
-  if (a === "students") return { ok: true, students: [{ no: 1, name: "สมชาย ใจดี" }, { no: 2, name: "สมหญิง รักเรียน" }, { no: 3, name: "ธนากร มั่นคง" }] };
-  if (p.pw !== "1234") return { ok: false, error: "รหัสไม่ถูกต้อง" };
-  if (a === "login") return { ok: true, admin: p.no == 1 }; // โหมดตัวอย่าง: เลขที่ 1 คือแอดมิน
-  if (a === "data") { const fee = DB.charges.reduce((t, c) => t + c.amount, 0); return { ok: true, income: 4500, expense: 1200, balance: 3300, paid: 20, fee, due: Math.max(0, fee - 20), qr: "", purchases: DB.purchases, charges: DB.charges }; }
-  if (a === "addPurchase") DB.purchases.unshift({ date: p.date, item: p.item, price: p.price, url: "" });
-  if (a === "addCharge") DB.charges.unshift({ date: p.date, reason: p.reason, kind: p.kind, note: p.note, amount: Number(p.amount) });
-  return { ok: true };
-}
-const esc = t => String(t == null ? "" : t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+let state = {
+  me: null,
+  students: [],
+  data: null,
+  adminPendingAction: null
+};
 
-// ค้นชื่อ
-$("#name").oninput = e => {
-  const q = e.target.value.trim(), box = $("#sug");
-  $("#no").value = ""; me = null;
-  const hits = q ? students.filter(s => s.name.includes(q)).slice(0, 8) : [];
-  box.classList.toggle("hide", !hits.length);
-  box.innerHTML = "";
-  hits.forEach(s => {
-    const d = document.createElement("div");
-    d.textContent = s.name + "  (เลขที่ " + s.no + ")";
-    d.onclick = () => { $("#name").value = s.name; $("#no").value = s.no; me = s; box.classList.add("hide"); };
-    box.appendChild(d);
+// ข้อมูลจำลอง (Mockup Data) กรณีรันแบบไมโครซอฟต์/โลคอลโดยไม่ใส่ Apps Script URL
+const MOCK_DB = {
+  students: [
+    { no: 1, name: "สมชาย ใจดี", pw: "1234", role: "admin", apw: "9999", title: "เหรัญญิก" },
+    { no: 2, name: "สมหญิง รักเรียน", pw: "2345", role: "student", apw: "", title: "หัวหน้าห้อง" },
+    { no: 3, name: "ธนากร มั่นคง", pw: "3456", role: "student", apw: "", title: "นักเรียน" }
+  ],
+  announcement: "ยินดีต้อนรับสู่ระบบกองกลางห้อง ม.4/10 โรงเรียนเบญจมราชูทิศ จันทบุรี",
+  balance: 4500,
+  income: 6000,
+  expense: 1500,
+  requests: [
+    { row: 2, code: "บ1/2569", date: "12/11/2026", no: 2, name: "สมหญิง รักเรียน", type: "เบิกจ่ายเงิน", item: "ค่าถ่ายเอกสารชีทวิชาคณิต", amount: 150, status: "รออนุมัติ", receiptUrl: "", qrUrl: "" },
+    { row: 3, code: "ข1/2569", date: "10/11/2026", no: 3, name: "ธนากร มั่นคง", type: "ซื้ออุปกรณ์", item: "ปากกาไวท์บอร์ด 2 กล่อง", amount: 120, status: "ดำเนินการเสร็จสิ้น", doneDate: "11/11/2026", slipUrl: "" }
+  ],
+  charges: [
+    { id: "CHG-1", no: 1, name: "สมชาย ใจดี", date: "01/11/2026", reason: "เงินห้องประจำสัปดาห์", kind: "รายสัปดาห์", amount: 20, note: "สัปดาห์ที่ 1", status: "ค้างชำระ" }
+  ],
+  homeworks: [
+    { code: "HW-001", date: "13/11/2026", no: 2, name: "สมหญิง รักเรียน", subject: "คณิตศาสตร์พื้นฐาน(ค31102)", where: "สมุด", page: "หน้า 24-25", dueDate: "20/11/2026", submitAt: "โต๊ะครูผู้สอน", note: "ทำความเข้าใจตัวอย่างที่ 3" }
+  ],
+  auditLogs: [
+    { date: "14/11/2026", time: "10:30:00", no: 1, name: "สมชาย ใจดี", role: "เหรัญญิก" }
+  ]
+};
+
+async function callAPI(action, payload = {}) {
+  if (!API) {
+    // จำลองการทำงาน (Mockup Handler)
+    if (action === 'init') return { ok: true, students: MOCK_DB.students.map(s => ({no: s.no, name: s.name})), announcement: MOCK_DB.announcement };
+    if (action === 'login') {
+      const st = MOCK_DB.students.find(s => s.no == payload.no && s.pw == payload.pw);
+      if (!st) return { ok: false, error: 'รหัสผ่านไม่ถูกต้อง' };
+      return { ok: true, canAdmin: st.role === 'admin', role: st.title, name: st.name, no: st.no };
+    }
+    if (action === 'adminLogin') {
+      const st = MOCK_DB.students.find(s => s.no == payload.no && s.apw == payload.apw);
+      return st ? { ok: true } : { ok: false, error: 'รหัสแอดมินชั้นที่ 2 ไม่ถูกต้อง' };
+    }
+    if (action === 'data') {
+      return {
+        ok: true,
+        balance: MOCK_DB.balance,
+        income: MOCK_DB.income,
+        expense: MOCK_DB.expense,
+        myDue: 20,
+        totalClassDue: 60,
+        completedCount: MOCK_DB.requests.filter(r => r.status === 'ดำเนินการเสร็จสิ้น').length,
+        qr: "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MockPromptPay",
+        requests: MOCK_DB.requests,
+        unpaid: MOCK_DB.charges.map(c => ({...c, date: c.date, amount: c.amount})),
+        homeworks: MOCK_DB.homeworks,
+        loginLogs: MOCK_DB.auditLogs
+      };
+    }
+    if (action === 'addRequest') {
+      MOCK_DB.requests.unshift({
+        row: MOCK_DB.requests.length + 2,
+        code: (payload.type === 'เบิกจ่ายเงิน' ? 'บ' : 'ข') + (MOCK_DB.requests.length + 1) + '/2569',
+        date: new Date().toLocaleDateString('th-TH'),
+        no: state.me.no,
+        name: state.me.name,
+        type: payload.type,
+        item: payload.item,
+        amount: Number(payload.amount),
+        status: 'รออนุมัติ'
+      });
+      return { ok: true };
+    }
+    if (action === 'addHomework') {
+      MOCK_DB.homeworks.unshift({
+        code: 'HW-' + Date.now().toString().slice(-4),
+        date: new Date().toLocaleDateString('th-TH'),
+        no: state.me.no,
+        name: state.me.name,
+        subject: payload.subject,
+        where: payload.where,
+        page: payload.page,
+        dueDate: payload.dueDate,
+        submitAt: payload.submitAt,
+        note: payload.note
+      });
+      return { ok: true };
+    }
+    return { ok: true };
+  }
+
+  // เรียกผ่าน Google Apps Script Web App จริง
+  const res = await fetch(API, { method: 'POST', body: JSON.stringify({ a: action, ...payload }) });
+  return res.json();
+}
+
+// ระบบค้นหาชื่อในหน้า Login
+$("#login-name").oninput = e => {
+  const q = e.target.value.trim();
+  const sug = $("#sug");
+  $("#login-no").value = "";
+  if (!q) { sug.classList.add("hide"); return; }
+  const hits = state.students.filter(s => s.name.includes(q));
+  sug.innerHTML = hits.map(s => `<div data-no="${s.no}" data-name="${s.name}">${s.name} (เลขที่ ${s.no})</div>`).join("");
+  sug.classList.toggle("hide", hits.length === 0);
+};
+
+$("#sug").onclick = e => {
+  const item = e.target.closest("div");
+  if (!item) return;
+  $("#login-name").value = item.dataset.name;
+  $("#login-no").value = item.dataset.no;
+  $("#sug").classList.add("hide");
+};
+
+// กดปุ่มเข้าสู่ระบบ
+$("#btn-login").onclick = async () => {
+  const no = $("#login-no").value;
+  const pw = $("#login-pw").value;
+  if (!no || !pw) { $("#login-msg").textContent = "กรุณาเลือกชื่อและใส่รหัสผ่าน"; return; }
+  
+  const res = await callAPI('login', { no, pw });
+  if (!res.ok) { $("#login-msg").textContent = res.error; return; }
+  
+  state.me = { no: Number(no), name: $("#login-name").value, canAdmin: res.canAdmin, role: res.role };
+  
+  if (res.canAdmin) {
+    // ขอรหัสแอดมินชั้นที่ 2 ตามโจทย์
+    state.adminPendingAction = () => enterDashboard(true);
+    $("#adm-modal-title").textContent = "กรุณากรอกรหัสแอดมินชั้นที่ 2";
+    $("#adm-input-pw").value = "";
+    $("#adm-modal-msg").textContent = "";
+    $("#modal-admin-prompt").classList.remove("hide");
+  } else {
+    enterDashboard(false);
+  }
+};
+
+async function enterDashboard(isAdmin) {
+  state.me.admin = isAdmin;
+  $("#login-container").classList.add("hide");
+  $("#app-container").classList.remove("hide");
+  
+  $("#user-display-name").textContent = state.me.name;
+  $("#user-display-role").textContent = state.me.role + (isAdmin ? " (Admin Active)" : "");
+  
+  if (isAdmin) {
+    $("#menu-chg").classList.remove("hide");
+    $("#menu-audit").classList.remove("hide");
+  }
+  
+  loadDashboardData();
+}
+
+async function loadDashboardData() {
+  const res = await callAPI('data', { no: state.me.no, apw: state.me.apw });
+  if (!res.ok) return;
+  state.data = res;
+  
+  $("#stat-balance").textContent = baht(res.balance);
+  $("#stat-income").textContent = baht(res.income);
+  $("#stat-expense").textContent = baht(res.expense);
+  $("#stat-pending-req").textContent = (res.requests || []).filter(r => r.status === 'รออนุมัติ').length + " รายการ";
+  
+  // หน้าเช็คยอดจ่าย
+  $("#pay-total-fee").textContent = baht(res.myDue + (res.paid || 0));
+  $("#pay-total-due").textContent = baht(res.myDue);
+  if (res.qr) { $("#img-qr-pay").src = res.qr; $("#img-qr-pay").classList.remove("hide"); }
+  
+  // ตารางคำร้อง
+  renderRequests(res.requests || []);
+  // ตารางยอดค้างชำระ
+  renderUnpaid(res.unpaid || []);
+  // ตารางงาน
+  renderHomeworks(res.homeworks || []);
+  // Audit log
+  if (state.me.admin && res.loginLogs) {
+    $("#table-audit-logs").innerHTML = res.loginLogs.map(l => `<tr><td>${l.date}</td><td>${l.time}</td><td>${l.no}</td><td>${l.name}</td><td>${l.role}</td></tr>`).join("");
+  }
+}
+
+// สลับหน้าเมนู Sidebar
+$$(".menu-item").forEach(btn => {
+  btn.onclick = () => {
+    $$(".menu-item").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    $$(".page-section").forEach(p => p.classList.add("hide"));
+    const target = btn.dataset.target;
+    $("#" + target).classList.remove("hide");
+    $("#topbar-title").textContent = btn.textContent.trim().replace(/^[^\s]+\s/, '');
+  };
+});
+
+// ยื่นคำร้อง
+$("#req-type").onchange = e => {
+  const isWithdraw = e.target.value === 'เบิกจ่ายเงิน';
+  $("#lbl-receipt").textContent = isWithdraw ? "แนบบิล / ใบเสร็จ (บังคับ)" : "แนบบิล / ใบเสร็จ (ถ้ามี)";
+};
+
+$("#btn-submit-req").onclick = async () => {
+  const type = $("#req-type").value;
+  const item = $("#req-item").value.trim();
+  const amount = $("#req-amount").value;
+  const receiptFile = $("#file-receipt").files[0];
+  const qrFile = $("#file-qr").files[0];
+  
+  if (!item || !amount) { $("#req-msg").textContent = "กรุณากรอกรายการและจำนวนเงินให้ครบถ้วน"; return; }
+  if (type === 'เบิกจ่ายเงิน' && !receiptFile) { $("#req-msg").textContent = "การเบิกจ่ายเงินจำเป็นต้องแนบบิล/ใบเสร็จ"; return; }
+  if (!qrFile) { $("#req-msg").textContent = "กรุณาแนบรูป QR-Code สำหรับรับเงิน"; return; }
+  
+  $("#btn-submit-req").disabled = true;
+  $("#req-msg").textContent = "กำลังส่งคำร้อง...";
+  
+  // แปลงรูปเป็น Base64
+  const toBase64 = file => new Promise((resolve) => {
+    if (!file) resolve("");
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
   });
+  
+  const receiptImg = await toBase64(receiptFile);
+  const qrImg = await toBase64(qrFile);
+  
+  const res = await callAPI('addRequest', { no: state.me.no, pw: state.me.pw, type, item, amount, receiptImg, qrImg });
+  if (res.ok) {
+    $("#req-msg").textContent = "✅ ส่งคำร้องสำเร็จเรียบร้อยแล้ว!";
+    $("#req-item").value = ""; $("#req-amount").value = "";
+    loadDashboardData();
+  } else {
+    $("#req-msg").textContent = "❌ " + res.error;
+  }
+  $("#btn-submit-req").disabled = false;
 };
 
-$("#go").onclick = async () => {
-  $("#msg").textContent = "";
-  if (!me) return $("#msg").textContent = "กรุณาเลือกชื่อจากรายการ";
-  me.pw = $("#pw").value;
-  try {
-    const r = await call("login", { no: me.no, pw: me.pw });
-    if (!r.ok) return $("#msg").textContent = r.error;
-    me.admin = !!r.admin; $("#goChg").classList.toggle("hide", !me.admin); show("home"); load();
-  } catch (e) { $("#msg").textContent = "เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง"; }
-};
-
-async function load() {
-  const d = await call("data", { no: me.no, pw: me.pw });
-  if (!d.ok) return;
-  $("#bal").textContent = baht(d.balance); $("#inc").textContent = baht(d.income); $("#exp").textContent = baht(d.expense);
-  $("#fee").textContent = baht(d.fee);
-  $("#chgList").innerHTML = (d.charges || []).map(c => `<div class="li"><div>${esc(c.reason)}<div class="mute">${esc(c.date)} · ${esc(c.kind)}${c.note ? " · " + esc(c.note) : ""}</div></div><b>${baht(c.amount)}</b></div>`).join("") || '<div class="mute">ยังไม่มีรายการ</div>';
-  $("#buyList").innerHTML = (d.purchases || []).map(x => `<div class="li"><div>${esc(x.item)}<div class="mute">${esc(x.date)}${/^https?:/.test(x.url) ? ` · <a href="${esc(x.url)}" target="_blank" rel="noopener">ดูหลักฐาน</a>` : ""}</div></div><b>${baht(x.price)}</b></div>`).join("") || '<div class="mute">ยังไม่มีรายการ</div>';
-  $("#paid").textContent = baht(d.paid); $("#due").textContent = baht(d.due);
-  $("#qr").src = d.qr && d.qr.startsWith("http") ? d.qr : "";
-  $("#qr").classList.toggle("hide", !$("#qr").getAttribute("src"));
+function renderRequests(list) {
+  const filter = $("#filter-req-type").value;
+  const filtered = list.filter(r => filter === 'all' || r.code.startsWith(filter));
+  const tbody = $("#table-requests");
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--mute);">ไม่มีข้อมูลคำร้อง</td></tr>`; return; }
+  
+  tbody.innerHTML = filtered.map(r => `
+    <tr>
+      <td><b>${r.code}</b></td>
+      <td>${r.date}</td>
+      <td>${r.name} (ล. ${r.no})</td>
+      <td><span class="badge ${r.type==='เบิกจ่ายเงิน'?'amber':'green'}">${r.type}</span></td>
+      <td>${r.item}</td>
+      <td>${baht(r.amount)}</td>
+      <td><span class="badge ${r.status==='ดำเนินการเสร็จสิ้น'?'green':'amber'}">${r.status}</span></td>
+      <td>${state.me.admin && r.status !== 'ดำเนินการเสร็จสิ้น' ? `<button class="btn btn-outline" style="padding:4px 8px; font-size:12px;" onclick="openCompleteModal(${r.row})">อนุมัติโอนเงิน</button>` : (r.status==='ดำเนินการเสร็จสิ้น'? `สำเร็จ (${r.doneDate})`:'รอตรวจสอบ')}</td>
+    </tr>
+  `).join("");
 }
-function show(id) { ["login", "home", "pay", "req", "buy", "chg"].forEach(x => $("#" + x).classList.toggle("hide", x !== id)); scrollTo(0, 0); }
-function who() { document.querySelectorAll(".who").forEach(e => e.textContent = "👤 " + me.name + " · เลขที่ " + me.no); }
-$("#goPay").onclick = () => { who(); show("pay"); load(); };
-$("#goReq").onclick = () => { who(); show("req"); };
-$("#goBuy").onclick = () => { $("#buyForm").classList.toggle("hide", !me.admin); $("#bd").value = today(); show("buy"); load(); };
-$("#goChg").onclick = () => { $("#cd").value = today(); show("chg"); };
-document.querySelectorAll("[name=k]").forEach(r => r.onchange = () => $("#cnl").textContent = document.querySelector("[name=k]:checked").value === "เฉพาะกิจกรรม" ? "หมายเหตุ (บังคับ)" : "หมายเหตุ (ไม่บังคับ)");
-$("#bsend").onclick = async () => {
-  const item = $("#bi").value.trim(), price = $("#bp").value, f = $("#bf").files[0], m = $("#bmsg");
-  if (!item || !price || !f) return m.textContent = "กรอกให้ครบและแนบหลักฐาน";
-  $("#bsend").disabled = true; m.textContent = "กำลังบันทึก...";
-  try {
-    const r = await call("addPurchase", { no: me.no, pw: me.pw, date: $("#bd").value, item, price, img: await shrink(f) });
-    m.textContent = r.ok ? "✅ บันทึกแล้ว" : r.error;
-    if (r.ok) { $("#bi").value = ""; $("#bp").value = ""; $("#bf").value = ""; load(); }
-  } catch (e) { m.textContent = "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง"; }
-  $("#bsend").disabled = false;
-};
-$("#csend").onclick = async () => {
-  const kind = document.querySelector("[name=k]:checked").value, note = $("#cn").value.trim(), reason = $("#cr").value.trim(), amount = $("#ca").value, m = $("#cmsg");
-  if (!reason || !(amount > 0)) return m.textContent = "กรอกเหตุผลและจำนวนเงินให้ครบ";
-  if (kind === "เฉพาะกิจกรรม" && !note) return m.textContent = "เฉพาะกิจกรรมต้องพิมพ์หมายเหตุ";
-  $("#csend").disabled = true; m.textContent = "กำลังเรียกเก็บ...";
-  try {
-    const r = await call("addCharge", { no: me.no, pw: me.pw, date: $("#cd").value, reason, kind, note, amount });
-    m.textContent = r.ok ? "✅ เรียกเก็บทุกคนแล้ว" : r.error;
-    if (r.ok) { $("#cr").value = ""; $("#cn").value = ""; $("#ca").value = ""; load(); }
-  } catch (e) { m.textContent = "ไม่สำเร็จ ลองใหม่อีกครั้ง"; }
-  $("#csend").disabled = false;
-};
-document.querySelectorAll(".back").forEach(b => b.onclick = () => show("home"));
-$("#out").onclick = () => location.reload();
+$("#filter-req-type").onchange = () => renderRequests(state.data.requests || []);
 
-// ย่อรูปใบเสร็จก่อนส่ง
-function shrink(file) {
-  return new Promise(res => {
-    if (!file) return res("");
-    const im = new Image();
-    im.onload = () => {
-      const k = Math.min(1, 1000 / Math.max(im.width, im.height)), c = document.createElement("canvas");
-      c.width = im.width * k; c.height = im.height * k;
-      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
-      res(c.toDataURL("image/jpeg", .7).split(",")[1]);
-    };
-    im.src = URL.createObjectURL(file);
-  });
+function renderUnpaid(list) {
+  const tbody = $("#table-unpaid");
+  if (!list.length) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--mute);">ไม่มีรายการค้างชำระ</td></tr>`; return; }
+  tbody.innerHTML = list.map(u => `
+    <tr>
+      <td>${u.no}</td>
+      <td><b>${u.name}</b></td>
+      <td>${u.reason}</td>
+      <td><span class="badge amber">${u.kind}</span></td>
+      <td><b style="color:var(--bad);">${baht(u.amount)}</b></td>
+      <td>${u.note || '-'}</td>
+    </tr>
+  `).join("");
 }
 
-$("#send").onclick = async () => {
-  const item = $("#item").value.trim(), price = $("#price").value;
-  if (!item || !price) return $("#msg2").textContent = "กรอกรายการและราคาให้ครบ";
-  $("#send").disabled = true; $("#msg2").textContent = "กำลังส่ง...";
-  try {
-    const img = await shrink($("#rc").files[0]);
-    const r = await call("request", { no: me.no, pw: me.pw, type: document.querySelector("[name=t]:checked").value, item, price, img });
-    $("#msg2").textContent = r.ok ? "✅ ส่งคำร้องแล้ว รอการอนุมัติ" : r.error;
-    if (r.ok) { $("#item").value = ""; $("#price").value = ""; $("#rc").value = ""; }
-  } catch (e) { $("#msg2").textContent = "ส่งไม่สำเร็จ ลองใหม่อีกครั้ง"; }
-  $("#send").disabled = false;
+// จัดการเรื่องงานและการบ้าน 15 วิชา
+$("#hw-where").onchange = e => {
+  const val = e.target.value;
+  const hidePage = val === 'สมุด' || val === 'แอป Classroom';
+  $("#hw-page").parentElement.style.display = hidePage ? 'none' : 'block';
 };
 
-call("students").then(r => students = r.students || []);
+$("#btn-open-hw-modal").onclick = () => $("#modal-hw").classList.remove("hide");
+$("#btn-close-hw").onclick = () => $("#modal-hw").classList.add("hide");
+
+$("#btn-save-hw").onclick = async () => {
+  const subject = $("#hw-subject").value;
+  const where = $("#hw-where").value;
+  const page = $("#hw-page").value;
+  const dueDate = $("#hw-due-date").value;
+  const submitAt = $("#hw-submit-at").value.trim();
+  const note = $("#hw-note").value.trim();
+  
+  if (!dueDate || !submitAt) { alert("กรุณากรอกวันกำหนดส่งและสถานที่ส่งให้ครบถ้วน"); return; }
+  
+  const res = await callAPI('addHomework', { no: state.me.no, pw: state.me.pw, subject, where, page, dueDate, submitAt, note });
+  if (res.ok) {
+    $("#modal-hw").classList.add("hide");
+    loadDashboardData();
+  } else {
+    alert(res.error);
+  }
+};
+
+function renderHomeworks(list) {
+  const filter = $("#select-subject-filter").value;
+  const filtered = list.filter(h => filter === 'all' || h.subject === filter);
+  const tbody = $("#table-homeworks");
+  if (!filtered.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--mute);">ยังไม่มีข้อมูลงานในรายวิชานี้</td></tr>`; return; }
+  tbody.innerHTML = filtered.map(h => `
+    <tr>
+      <td><b>${h.subject}</b></td>
+      <td>${h.name}</td>
+      <td><span class="badge green">${h.where}</span></td>
+      <td>${h.page}</td>
+      <td>${h.dueDate}</td>
+      <td>${h.submitAt}</td>
+      <td>${h.note}</td>
+    </tr>
+  `).join("");
+}
+$("#select-subject-filter").onchange = () => renderHomeworks(state.data.homeworks || []);
+
+// Modal รหัสแอดมินชั้นที่ 2
+$("#adm-modal-cancel").onclick = () => $("#modal-admin-prompt").classList.add("hide");
+$("#adm-modal-confirm").onclick = async () => {
+  const apw = $("#adm-input-pw").value;
+  const res = await callAPI('adminLogin', { no: state.me.no, apw });
+  if (!res.ok) { $("#adm-modal-msg").textContent = res.error; return; }
+  state.me.apw = apw;
+  $("#modal-admin-prompt").classList.add("hide");
+  if (state.adminPendingAction) state.adminPendingAction();
+};
+
+// ตั้งค่าเปลี่ยนชื่อ
+$("#btn-save-name").onclick = async () => {
+  const newName = $("#setting-new-name").value.trim();
+  if (!newName) return;
+  const res = await callAPI('updateName', { no: state.me.no, pw: state.me.pw, newName });
+  if (res.ok) {
+    state.me.name = newName;
+    $("#user-display-name").textContent = newName;
+    $("#setting-msg").textContent = "✅ เปลี่ยนชื่อสำเร็จ";
+  }
+};
+
+// ออกจากระบบ
+$("#btn-logout").onclick = () => location.reload();
+
+// โหลดข้อมูลเริ่มต้นรายชื่อนักเรียน
+callAPI('init').then(res => {
+  if (res.ok) {
+    state.students = res.students || [];
+    if (res.announcement) $("#login-announcement").textContent = res.announcement;
+  }
+});
 </script>
 </body>
 </html>
