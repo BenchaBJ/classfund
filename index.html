@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>กองกลางห้อง</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--tx:#1b2a3a;--mute:#6b7a8c;--pri:#2563eb;--ok:#16a34a;--bad:#dc2626;--ln:#e3e9f0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Prompt,"Noto Sans Thai",sans-serif}
+main{max-width:480px;margin:0 auto;padding:16px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px #0001}
+h1{font-size:22px;margin:8px 0 14px}h2{font-size:17px;margin:0 0 10px}
+label{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+input,button{font:inherit;width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--ln)}
+input[readonly]{background:var(--bg)}
+button{background:var(--pri);color:#fff;border:0;font-weight:600;margin-top:14px;cursor:pointer}
+button.ghost{background:#e8effd;color:var(--pri);margin-top:0}
+.hide{display:none}.sug{border:1px solid var(--ln);border-radius:10px;margin-top:4px;max-height:180px;overflow:auto}
+.sug div{padding:10px 12px;border-bottom:1px solid var(--ln);cursor:pointer}
+.big{font-size:32px;font-weight:600}.row{display:flex;gap:10px}.row>div{flex:1}
+.mini{border-radius:12px;padding:12px;background:var(--bg)}.mini b{display:block;font-size:19px}
+.tile{display:block;text-align:left;background:var(--card);color:var(--tx);border:0;border-radius:16px;padding:16px;margin:0 0 12px;box-shadow:0 1px 4px #0001}.tile small{display:block;font-weight:400;color:var(--mute);font-size:13px}
+.li{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--ln)}.li:last-child{border:0}textarea{font:inherit;width:100%}
+.in{color:var(--ok)}.out{color:var(--bad)}.mute{color:var(--mute);font-size:14px}
+.opts{display:flex;gap:8px}.opts label{flex:1;display:flex;align-items:center;gap:8px;margin:0;padding:10px;border:1px solid var(--ln);border-radius:10px;color:var(--tx)}
+.opts input{width:auto}
+#qr{width:100%;max-width:240px;display:block;margin:10px auto;border-radius:12px}
+#msg{color:var(--bad);font-size:14px;min-height:20px;margin-top:8px}
+.top{display:flex;justify-content:space-between;align-items:center}.top button{width:auto;margin:0;padding:6px 12px;background:#e8effd;color:var(--pri)}
+</style>
+</head>
+<body>
+<main>
+
+<!-- ล็อกอิน -->
+<section id="login">
+  <h1>💰 กองกลางห้อง</h1>
+  <div class="card">
+    <label>ชื่อ-นามสกุล (พิมพ์ไม่กี่ตัวแล้วเลือก)</label>
+    <input id="name" autocomplete="off" placeholder="เช่น สม">
+    <div id="sug" class="sug hide"></div>
+    <label>เลขที่</label><input id="no" readonly>
+    <label>รหัส</label><input id="pw" type="password" inputmode="numeric">
+    <button id="go">เข้าสู่ระบบ</button>
+    <div id="msg"></div>
+  </div>
+</section>
+
+<!-- หน้าแรก: ภาพรวมของห้อง -->
+<section id="home" class="hide">
+  <div class="top"><h1>💰 กองกลางห้อง</h1><button id="out">ออก</button></div>
+  <div class="card">
+    <div class="mute">เงินคงเหลือของห้อง</div><div class="big" id="bal">-</div>
+    <div class="row" style="margin-top:10px">
+      <div class="mini"><span class="mute">รายได้</span><b class="in" id="inc">-</b></div>
+      <div class="mini"><span class="mute">รายจ่าย</span><b class="out" id="exp">-</b></div>
+    </div>
+  </div>
+  <button class="tile" id="goPay">🔎 เช็คยอดจ่าย<small>ดูยอดของฉัน และจ่ายเงินผ่าน QR</small></button>
+  <button class="tile" id="goReq">📝 คำร้องซื้ออุปกรณ์ / เบิกเงิน<small>ส่งคำร้องพร้อมราคาและใบเสร็จ</small></button>
+  <button class="tile" id="goBuy">🛒 การซื้อของ<small>ดูว่าซื้ออะไร ราคาเท่าไร พร้อมหลักฐาน</small></button>
+  <button class="tile hide" id="goChg">🔒 เรียกเก็บเงิน<small>เฉพาะแอดมิน</small></button>
+</section>
+
+<!-- เช็คยอดจ่าย (ส่วนตัว) -->
+<section id="pay" class="hide">
+  <div class="top"><h1>เช็คยอดจ่าย</h1><button class="back">← กลับ</button></div>
+  <div class="card">
+    <div class="who mute"></div>
+    <div class="row" style="margin-top:10px">
+      <div class="mini"><span class="mute">ต้องจ่ายรวม</span><b id="fee">-</b></div>
+      <div class="mini"><span class="mute">จ่ายรวมแล้ว</span><b class="in" id="paid">-</b></div>
+      <div class="mini"><span class="mute">ค้างคงเหลือ</span><b class="out" id="due">-</b></div>
+    </div>
+    <h2 style="margin:16px 0 0">รายการเรียกเก็บ</h2><div id="chgList"></div>
+    <p class="mute" style="text-align:center;margin:14px 0 0">สแกน QR เพื่อจ่ายเงิน</p>
+    <img id="qr" alt="QR code">
+  </div>
+</section>
+
+<!-- คำร้อง (ส่วนตัว) -->
+<section id="req" class="hide">
+  <div class="top"><h1>คำร้อง</h1><button class="back">← กลับ</button></div>
+  <div class="card">
+    <div class="who mute"></div>
+    <label>ประเภทคำร้อง</label>
+    <div class="opts">
+      <label><input type="radio" name="t" value="ซื้ออุปกรณ์" checked>ซื้ออุปกรณ์</label>
+      <label><input type="radio" name="t" value="เบิกเงิน">เบิกเงิน</label>
+    </div>
+    <label>รายการ / เหตุผล</label><input id="item" placeholder="เช่น ไม้กวาด 2 อัน">
+    <label>ราคา (บาท)</label><input id="price" type="number" inputmode="decimal">
+    <label>ใบเสร็จ (รูปภาพ)</label><input id="rc" type="file" accept="image/*">
+    <button id="send">ส่งคำร้อง</button>
+    <div id="msg2" class="mute" style="margin-top:8px"></div>
+  </div>
+</section>
+<!-- การซื้อของ -->
+<section id="buy" class="hide">
+  <div class="top"><h1>การซื้อของ</h1><button class="back">← กลับ</button></div>
+  <div id="buyForm" class="card hide">
+    <h2>🔒 บันทึกการซื้อ (แอดมิน)</h2>
+    <label>วันที่</label><input id="bd" type="date">
+    <label>ซื้ออะไร</label><input id="bi">
+    <label>ราคา (บาท)</label><input id="bp" type="number" inputmode="decimal">
+    <label>แนบหลักฐาน (รูปภาพ)</label><input id="bf" type="file" accept="image/*">
+    <button id="bsend">บันทึก</button><div id="bmsg" class="mute" style="margin-top:8px"></div>
+  </div>
+  <div class="card"><div id="buyList"></div></div>
+</section>
+
+<!-- เรียกเก็บเงิน (แอดมินเท่านั้น) -->
+<section id="chg" class="hide">
+  <div class="top"><h1>เรียกเก็บเงิน</h1><button class="back">← กลับ</button></div>
+  <div class="card">
+    <div class="mute">🔒 แอดมินเท่านั้น · เมื่อกดตกลง ทุกคนจะมียอดค้างเพิ่มทันที</div>
+    <label>วันที่</label><input id="cd" type="date">
+    <label>เก็บเงินเพราะ</label><input id="cr" placeholder="เช่น เงินห้องประจำสัปดาห์">
+    <label>ประเภท</label>
+    <div class="opts">
+      <label><input type="radio" name="k" value="รายสัปดาห์" checked>รายสัปดาห์</label>
+      <label><input type="radio" name="k" value="เฉพาะกิจกรรม">เฉพาะกิจกรรม</label>
+    </div>
+    <label id="cnl">หมายเหตุ (ไม่บังคับ)</label><textarea id="cn" rows="2"></textarea>
+    <label>จำนวนเงินต่อคน (บาท)</label><input id="ca" type="number" inputmode="decimal">
+    <button id="csend">ตกลง เรียกเก็บทุกคน</button><div id="cmsg" class="mute" style="margin-top:8px"></div>
+  </div>
+</section>
+</main>
+
+<script>
+const API = ""; // ← วาง Web App URL จาก Apps Script ตรงนี้ (ว่างไว้ = โหมดตัวอย่าง รหัส 1234)
+const $ = s => document.querySelector(s);
+const baht = n => "฿" + Number(n || 0).toLocaleString("th-TH");
+let me = null, students = [];
+
+async function call(a, p = {}) {
+  if (!API) return demo(a, p);
+  const r = await fetch(API, { method: "POST", body: JSON.stringify({ a, ...p }) });
+  return r.json();
+}
+const DB = { purchases: [{ date: "10/11/2026", item: "ไม้กวาด", price: 120, url: "" }], charges: [{ date: "1/11/2026", reason: "เงินห้องประจำสัปดาห์", kind: "รายสัปดาห์", note: "", amount: 20 }] };
+function demo(a, p) {
+  if (a === "students") return { ok: true, students: [{ no: 1, name: "สมชาย ใจดี" }, { no: 2, name: "สมหญิง รักเรียน" }, { no: 3, name: "ธนากร มั่นคง" }] };
+  if (p.pw !== "1234") return { ok: false, error: "รหัสไม่ถูกต้อง" };
+  if (a === "login") return { ok: true, admin: p.no == 1 }; // โหมดตัวอย่าง: เลขที่ 1 คือแอดมิน
+  if (a === "data") { const fee = DB.charges.reduce((t, c) => t + c.amount, 0); return { ok: true, income: 4500, expense: 1200, balance: 3300, paid: 20, fee, due: Math.max(0, fee - 20), qr: "", purchases: DB.purchases, charges: DB.charges }; }
+  if (a === "addPurchase") DB.purchases.unshift({ date: p.date, item: p.item, price: p.price, url: "" });
+  if (a === "addCharge") DB.charges.unshift({ date: p.date, reason: p.reason, kind: p.kind, note: p.note, amount: Number(p.amount) });
+  return { ok: true };
+}
+const esc = t => String(t == null ? "" : t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
+
+// ค้นชื่อ
+$("#name").oninput = e => {
+  const q = e.target.value.trim(), box = $("#sug");
+  $("#no").value = ""; me = null;
+  const hits = q ? students.filter(s => s.name.includes(q)).slice(0, 8) : [];
+  box.classList.toggle("hide", !hits.length);
+  box.innerHTML = "";
+  hits.forEach(s => {
+    const d = document.createElement("div");
+    d.textContent = s.name + "  (เลขที่ " + s.no + ")";
+    d.onclick = () => { $("#name").value = s.name; $("#no").value = s.no; me = s; box.classList.add("hide"); };
+    box.appendChild(d);
+  });
+};
+
+$("#go").onclick = async () => {
+  $("#msg").textContent = "";
+  if (!me) return $("#msg").textContent = "กรุณาเลือกชื่อจากรายการ";
+  me.pw = $("#pw").value;
+  try {
+    const r = await call("login", { no: me.no, pw: me.pw });
+    if (!r.ok) return $("#msg").textContent = r.error;
+    me.admin = !!r.admin; $("#goChg").classList.toggle("hide", !me.admin); show("home"); load();
+  } catch (e) { $("#msg").textContent = "เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง"; }
+};
+
+async function load() {
+  const d = await call("data", { no: me.no, pw: me.pw });
+  if (!d.ok) return;
+  $("#bal").textContent = baht(d.balance); $("#inc").textContent = baht(d.income); $("#exp").textContent = baht(d.expense);
+  $("#fee").textContent = baht(d.fee);
+  $("#chgList").innerHTML = (d.charges || []).map(c => `<div class="li"><div>${esc(c.reason)}<div class="mute">${esc(c.date)} · ${esc(c.kind)}${c.note ? " · " + esc(c.note) : ""}</div></div><b>${baht(c.amount)}</b></div>`).join("") || '<div class="mute">ยังไม่มีรายการ</div>';
+  $("#buyList").innerHTML = (d.purchases || []).map(x => `<div class="li"><div>${esc(x.item)}<div class="mute">${esc(x.date)}${/^https?:/.test(x.url) ? ` · <a href="${esc(x.url)}" target="_blank" rel="noopener">ดูหลักฐาน</a>` : ""}</div></div><b>${baht(x.price)}</b></div>`).join("") || '<div class="mute">ยังไม่มีรายการ</div>';
+  $("#paid").textContent = baht(d.paid); $("#due").textContent = baht(d.due);
+  $("#qr").src = d.qr && d.qr.startsWith("http") ? d.qr : "";
+  $("#qr").classList.toggle("hide", !$("#qr").getAttribute("src"));
+}
+function show(id) { ["login", "home", "pay", "req", "buy", "chg"].forEach(x => $("#" + x).classList.toggle("hide", x !== id)); scrollTo(0, 0); }
+function who() { document.querySelectorAll(".who").forEach(e => e.textContent = "👤 " + me.name + " · เลขที่ " + me.no); }
+$("#goPay").onclick = () => { who(); show("pay"); load(); };
+$("#goReq").onclick = () => { who(); show("req"); };
+$("#goBuy").onclick = () => { $("#buyForm").classList.toggle("hide", !me.admin); $("#bd").value = today(); show("buy"); load(); };
+$("#goChg").onclick = () => { $("#cd").value = today(); show("chg"); };
+document.querySelectorAll("[name=k]").forEach(r => r.onchange = () => $("#cnl").textContent = document.querySelector("[name=k]:checked").value === "เฉพาะกิจกรรม" ? "หมายเหตุ (บังคับ)" : "หมายเหตุ (ไม่บังคับ)");
+$("#bsend").onclick = async () => {
+  const item = $("#bi").value.trim(), price = $("#bp").value, f = $("#bf").files[0], m = $("#bmsg");
+  if (!item || !price || !f) return m.textContent = "กรอกให้ครบและแนบหลักฐาน";
+  $("#bsend").disabled = true; m.textContent = "กำลังบันทึก...";
+  try {
+    const r = await call("addPurchase", { no: me.no, pw: me.pw, date: $("#bd").value, item, price, img: await shrink(f) });
+    m.textContent = r.ok ? "✅ บันทึกแล้ว" : r.error;
+    if (r.ok) { $("#bi").value = ""; $("#bp").value = ""; $("#bf").value = ""; load(); }
+  } catch (e) { m.textContent = "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง"; }
+  $("#bsend").disabled = false;
+};
+$("#csend").onclick = async () => {
+  const kind = document.querySelector("[name=k]:checked").value, note = $("#cn").value.trim(), reason = $("#cr").value.trim(), amount = $("#ca").value, m = $("#cmsg");
+  if (!reason || !(amount > 0)) return m.textContent = "กรอกเหตุผลและจำนวนเงินให้ครบ";
+  if (kind === "เฉพาะกิจกรรม" && !note) return m.textContent = "เฉพาะกิจกรรมต้องพิมพ์หมายเหตุ";
+  $("#csend").disabled = true; m.textContent = "กำลังเรียกเก็บ...";
+  try {
+    const r = await call("addCharge", { no: me.no, pw: me.pw, date: $("#cd").value, reason, kind, note, amount });
+    m.textContent = r.ok ? "✅ เรียกเก็บทุกคนแล้ว" : r.error;
+    if (r.ok) { $("#cr").value = ""; $("#cn").value = ""; $("#ca").value = ""; load(); }
+  } catch (e) { m.textContent = "ไม่สำเร็จ ลองใหม่อีกครั้ง"; }
+  $("#csend").disabled = false;
+};
+document.querySelectorAll(".back").forEach(b => b.onclick = () => show("home"));
+$("#out").onclick = () => location.reload();
+
+// ย่อรูปใบเสร็จก่อนส่ง
+function shrink(file) {
+  return new Promise(res => {
+    if (!file) return res("");
+    const im = new Image();
+    im.onload = () => {
+      const k = Math.min(1, 1000 / Math.max(im.width, im.height)), c = document.createElement("canvas");
+      c.width = im.width * k; c.height = im.height * k;
+      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+      res(c.toDataURL("image/jpeg", .7).split(",")[1]);
+    };
+    im.src = URL.createObjectURL(file);
+  });
+}
+
+$("#send").onclick = async () => {
+  const item = $("#item").value.trim(), price = $("#price").value;
+  if (!item || !price) return $("#msg2").textContent = "กรอกรายการและราคาให้ครบ";
+  $("#send").disabled = true; $("#msg2").textContent = "กำลังส่ง...";
+  try {
+    const img = await shrink($("#rc").files[0]);
+    const r = await call("request", { no: me.no, pw: me.pw, type: document.querySelector("[name=t]:checked").value, item, price, img });
+    $("#msg2").textContent = r.ok ? "✅ ส่งคำร้องแล้ว รอการอนุมัติ" : r.error;
+    if (r.ok) { $("#item").value = ""; $("#price").value = ""; $("#rc").value = ""; }
+  } catch (e) { $("#msg2").textContent = "ส่งไม่สำเร็จ ลองใหม่อีกครั้ง"; }
+  $("#send").disabled = false;
+};
+
+call("students").then(r => students = r.students || []);
+</script>
+</body>
+</html>
