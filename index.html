@@ -77,7 +77,7 @@ main{flex:1;padding:16px;min-width:0}
 <div id="md" class="hide"></div>
 
 <script>
-const API = ""; // ← ถ้าโฮสต์บน GitHub: วางลิงก์เว็บแอป Apps Script (ลงท้าย /exec) ตรงนี้ / ถ้าเปิดจากลิงก์ Apps Script เอง ปล่อยว่างได้
+const API = "https://script.google.com/macros/s/AKfycbxh_Xd_d1qcCUXTbrovnXkfnbS6Chi98PPf9atOdunqVykI841C9GzNaZM636g0LTH3/exec"; // ← ถ้าโฮสต์บน GitHub: วางลิงก์เว็บแอป Apps Script (ลงท้าย /exec) ตรงนี้ / ถ้าเปิดจากลิงก์ Apps Script เอง ปล่อยว่างได้
 const $ = s => document.querySelector(s), baht = n => "฿" + Number(n || 0).toLocaleString("th-TH");
 const esc = t => String(t == null ? "" : t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
