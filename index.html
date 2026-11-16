@@ -116,7 +116,7 @@ main{flex:1;padding:24px 32px;min-width:0}
     <div id="v-dues" class="hide pn">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
         <h3 style="margin:0">💳 ยอดค้างชำระ & ค่าปรับ</h3>
-        <button class="btn sm l" onclick="viewCancelLogs()">📜 ประวัติการยกเลิก (โปร่งใส)</button>
+        <button class="btn sm l" onclick="viewCancelLogs()">📜 ประวัติการยกเลิก </button>
       </div>
       <div class="m" style="margin-bottom:12px">💡 คลิกที่แถวรายการใดก็ได้เพื่อดูรายละเอียดเชิงลึกและสแกน QR-Code ผู้แจ้ง</div>
       <div id="l-dues"></div>
@@ -205,7 +205,7 @@ function enter() {
   document.querySelectorAll(".ad").forEach(a => a.classList.toggle("hide", !me.isPrivileged));
   $("#nav-chg").classList.toggle("hide", !me.canCreateCharge);
   $("#nav-votes").classList.toggle("hide", !(me.isDuty || me.isLeader || me.isPrivileged));
-  $("#k-due-lbl").textContent = me.isPrivileged ? "ยอดค้างชำระรวมทั้งห้อง" : "ยอดค้างชำระของคุณ";
+  $("#k-due-lbl").textContent = me.isPrivileged ? "ยอดค้างชำระของทั้งห้อง" : "ยอดค้างชำระของคุณ";
   $("#hn").onclick = () => view("set"); view("home");
 }
 $("#out").onclick = () => location.reload();
@@ -541,8 +541,8 @@ function chgForm() {
     <label>เลือกผู้ชำระ (เลือกได้หลายคน)</label>
     <label style="color:var(--tx)"><input type="checkbox" id="cal"> ทุกคน</label>
     <div style="max-height:160px;overflow:auto;border:1px solid var(--ln);border-radius:12px;padding:8px 12px">${ST.map(s => `<label style="color:var(--tx);margin:4px 0"><input type="checkbox" class="cs" value="${esc(s.no)}"> ${esc(s.no)} · ${esc(s.name)}</label>`).join("")}</div>
-    <label>จำนวนเงิน (บาท) <span style="color:#d63031">*กำหนดเพดาน 30 - 200 บาท</span></label>
-    <input id="ca" type="number" min="30" max="200" inputmode="decimal" placeholder="ระบุจำนวนเงิน (30 - 200 บาท)">
+    <label>จำนวนเงิน (บาท) <span style="color:#d63031"></span></label>
+    <input id="ca" type="number"  inputmode="decimal" placeholder="ระบุจำนวนเงิน">
     <label>ชำระภายใน (วัน)</label><input id="cg" type="number" value="7">
     <div id="cf" class="hide"><label>หากไม่ชำระภายในกำหนด ให้ทบเงินทุก ๆ ... วัน (นับจากวันที่แจ้ง)</label><input id="cn" type="number" value="7"></div>
     <div id="cm"></div>
@@ -556,7 +556,7 @@ function chgForm() {
     const f = k() === "ปรับ";
     $("#cf").classList.toggle("hide", !f);
     $("#cm").innerHTML = f
-      ? '<label>เหตุผลการปรับ (กรอกเอง)</label><input id="ct" placeholder="เช่น ไม่ทำเวร, มาสาย">'
+      ? '<label>เหตุผลการปรับ </label><input id="ct" placeholder="เช่น ไม่ทำเวร, ไม่ทำพื้นที่สวย">'
       : '<label>หมายเหตุ</label><select id="cs"><option value="เงินรายสัปดาห์">เงินรายสัปดาห์</option><option value="เงินรายเดือน">เงินรายเดือน</option><option value="เงินเฉพาะกิจกรรม">เงินเฉพาะกิจกรรม</option></select><div id="cx" class="hide"><label>ระบุกิจกรรม (บังคับ)</label><input id="ct" placeholder="เช่น ค่าลูกโป่ง, ค่ากีฬาสี"></div>';
     if (!f) $("#cs").onchange = () => $("#cx").classList.toggle("hide", $("#cs").value !== "เงินเฉพาะกิจกรรม");
   };
