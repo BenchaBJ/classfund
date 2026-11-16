@@ -5,15 +5,16 @@
 <style>
 :root{--bg:#f2f4fa;--tx:#1b203a;--mu:#646a8a;--ln:#e2e6f3;--g:linear-gradient(135deg,#6c5ce7,#0984e3)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 Prompt,"Noto Sans Thai",sans-serif}
-.hide{display:none!important}button,input,select{font:inherit}
-input:not([type=checkbox]):not([type=radio]),select{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;background:#fff;transition:.2s}
-input:focus,select:focus{outline:none;border-color:#6c5ce7;box-shadow:0 0 0 3px #6c5ce722}
+.hide{display:none!important}button,input,select,textarea{font:inherit}
+input:not([type=checkbox]):not([type=radio]),select,textarea{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;background:#fff;transition:.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#6c5ce7;box-shadow:0 0 0 3px #6c5ce722}
 label{display:block;font-size:13px;color:var(--mu);margin:12px 0 4px;font-weight:500}
 .btn{border:0;border-radius:12px;padding:10px 18px;background:var(--g);color:#fff;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .btn:hover{opacity:.92;transform:translateY(-1px)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .btn.w{width:100%;margin-top:16px}.btn.l{background:#fff;color:var(--tx);border:1px solid var(--ln)}
 .btn.sm{padding:6px 12px;font-size:13px;border-radius:9px}
 .btn.ok{background:linear-gradient(135deg,#00b894,#00cec9)}.btn.warn{background:linear-gradient(135deg,#e17055,#d63031)}
+.btn.pardon{background:linear-gradient(135deg,#f39c12,#f1c40f);color:#fff}
 
 /* Login */
 #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
@@ -26,7 +27,7 @@ label{display:block;font-size:13px;color:var(--mu);margin:12px 0 4px;font-weight
 .sug div{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--ln)}.sug div:hover{background:#f5f6ff}
 .er{color:#d63031;font-size:13px;min-height:20px;margin-top:8px}
 
-/* Main App Layout (ขยายให้กว้างเต็มตา) */
+/* Main App Layout */
 #app{display:flex;min-height:100vh;max-width:1600px;margin:0 auto}
 aside{width:260px;background:#fff;padding:24px 16px;border-right:1px solid var(--ln);flex-shrink:0;display:flex;flex-direction:column;gap:4px}
 aside h3{margin:0 10px 18px;font-size:18px;color:#4834d4}
@@ -39,7 +40,7 @@ main{flex:1;padding:24px 32px;min-width:0}
 .hd{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:20px;padding:14px 22px;margin-bottom:22px;gap:14px;box-shadow:0 4px 16px #1b203a0a}
 .hd b{display:block;font-size:16px;line-height:1.3}.hd small{color:var(--mu);font-size:13px}.hd .u{display:flex;align-items:center;gap:16px}
 
-/* Banner & Dashboard Grid (ปรับขนาดการ์ดให้ใหญ่และดูดี) */
+/* Banner & Dashboard Grid */
 .bn{background:var(--g);color:#fff;border-radius:26px;padding:32px 36px;margin-bottom:24px;box-shadow:0 12px 30px #6c5ce733;position:relative;overflow:hidden}
 .bn small{opacity:.9;font-size:14px;letter-spacing:.5px;text-transform:uppercase}.bn h1{margin:6px 0 0;font-size:24px;line-height:1.45;font-weight:700}
 .gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
@@ -88,7 +89,7 @@ main{flex:1;padding:24px 32px;min-width:0}
     <a data-v="claims"><span>📝 คำร้อง</span></a>
     <a data-v="prog"><span>📈 ติดตามความก้าวหน้า</span></a>
     <a data-v="dues"><span>💳 ยอดค้างชำระ</span></a>
-    <a data-v="votes" id="nav-votes" class="hide"><span>🗳️ โหวต/อนุมัติปรับ</span><span class="pill hide" id="v-badge">0</span></a>
+    <a data-v="votes" id="nav-votes" class="hide"><span>⚖️ อุทธรณ์ / อนุมัติ</span><span class="pill hide" id="v-badge">0</span></a>
     <a data-v="chg" id="nav-chg" class="hide"><span>🧾 เรียกเก็บเงิน/ปรับ</span></a>
     <a data-v="docs"><span>📚 เอกสาร / การบ้าน</span></a>
     <a data-v="set"><span>⚙️ ตั้งค่า</span></a>
@@ -111,8 +112,22 @@ main{flex:1;padding:24px 32px;min-width:0}
 
     <div id="v-claims" class="hide pn"><h3>รายการคำร้อง</h3>
       <div class="ft"><label><input type="checkbox" id="fb" checked> บ (เบิกเงิน)</label><label><input type="checkbox" id="fk" checked> ข (ให้ซื้อ)</label></div><div id="l-claims"></div></div>
-    <div id="v-dues" class="hide pn"><h3>ยอดค้างชำระ & ค่าปรับ</h3><div id="l-dues"></div></div>
-    <div id="v-votes" class="hide pn"><h3>🗳️ รายการรอโหวต / ยินยอม</h3><div id="l-votes"></div></div>
+    
+    <div id="v-dues" class="hide pn">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+        <h3 style="margin:0">💳 ยอดค้างชำระ & ค่าปรับ</h3>
+        <button class="btn sm l" onclick="viewCancelLogs()">📜 ประวัติการยกเลิก (โปร่งใส)</button>
+      </div>
+      <div class="m" style="margin-bottom:12px">💡 คลิกที่แถวรายการใดก็ได้เพื่อดูรายละเอียดเชิงลึกและสแกน QR-Code ผู้แจ้ง</div>
+      <div id="l-dues"></div>
+    </div>
+
+    <div id="v-votes" class="hide pn">
+      <h3>⚖️ รายการอุทธรณ์ / รอโหวตยินยอม</h3>
+      <input type="text" id="v-search" placeholder="🔍 ค้นหารหัสอ้างอิง (เช่น รง1/2569, ผ1/2569) หรือชื่อ..." style="margin-bottom:14px">
+      <div id="l-votes"></div>
+    </div>
+
     <div id="v-chg" class="hide pn"></div>
     <div id="v-docs" class="hide pn"></div>
     <div id="v-set" class="hide pn"></div>
@@ -127,7 +142,7 @@ const API = "https://script.google.com/macros/s/AKfycbxh_Xd_d1qcCUXTbrovnXkfnbS6
 const $ = s => document.querySelector(s), baht = n => "฿" + Number(n || 0).toLocaleString("th-TH");
 const esc = t => String(t == null ? "" : t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
-let me = null, ST = [], D = null, DUES_LIST = [];
+let me = null, ST = [], D = null, DUES_LIST = [], VOTES_LIST = [];
 
 function call(a, p = {}) {
   const b = JSON.stringify({ a, ...p });
@@ -233,7 +248,7 @@ function onList(e) {
 }
 $("#l-claims").onclick = $("#l-prog").onclick = onList;
 
-/* ---------- ยื่นคำร้อง (รองรับติ๊กเงินสด) ---------- */
+/* ---------- ยื่นคำร้อง ---------- */
 $("#nc").onclick = () => {
   modal(`<h3>📝 ยื่นคำร้อง</h3><label>ชื่อ-นามสกุล</label><input value="${esc(me.name)}" readonly><label>เลขที่</label><input value="${esc(me.no)}" readonly>
   <label>วันที่</label><input type="date" id="rd" value="${today()}"><label>ประเภท</label>
@@ -264,7 +279,7 @@ $("#nc").onclick = () => {
   };
 };
 
-/* ---------- ยอดค้างชำระ (ปุ่มจ่ายแล้ว + แนบสลิป + เหรัญญิกเพิกถอน) ---------- */
+/* ---------- ยอดค้างชำระ (คลิกดู QR, ปุ่มขอผ่อนผัน, ปุ่มจ่ายแล้ว, ปุ่มยกเลิก) ---------- */
 const AU = () => ({ no: me.no, pw: me.pw, apw: me.apw });
 async function dues() {
   const r = await call("dues", AU());
@@ -276,24 +291,150 @@ async function dues() {
 
     let btns = '';
     if (x.status === 'ค้าง') {
-      btns += `<button class="btn sm ok" onclick="openPayModal(${x.id})">จ่ายแล้ว</button> `;
+      btns += `<button class="btn sm pardon" onclick="event.stopPropagation(); openAppealModal(${x.id})">ขอผ่อนผัน</button> `;
+      btns += `<button class="btn sm ok" onclick="event.stopPropagation(); openPayModal(${x.id})">จ่ายแล้ว</button> `;
     }
     if (me.isPrivileged) {
       if (x.status === 'รอตรวจสอบ') {
-        btns += `<button class="btn sm" onclick="reviewPay(${x.id})">ตรวจสลิป</button> `;
+        btns += `<button class="btn sm" onclick="event.stopPropagation(); reviewPay(${x.id})">ตรวจสลิป</button> `;
       }
       if (x.status === 'รอตรวจสอบ' || x.status === 'ชำระแล้ว') {
-        btns += `<button class="btn sm warn" onclick="revokePay(${x.id})">เพิกถอน</button>`;
+        btns += `<button class="btn sm warn" onclick="event.stopPropagation(); revokePay(${x.id})">เพิกถอน</button> `;
+      }
+      if (x.status === 'ค้าง') {
+        btns += `<button class="btn sm warn" onclick="event.stopPropagation(); cancelChargeModal(${x.id})">ยกเลิกรายการ</button>`;
       }
     }
-    return `<div class="rw" style="cursor:default">
+    return `<div class="rw" onclick="openDueDetail(${x.id})">
       <div><b>${esc(x.name)}</b> · เลขที่ ${esc(x.sn)} ${badge}
         <div class="m">แจ้งเมื่อ ${esc(x.date)} · <b>${esc(x.kind)}</b>: ${esc(x.note)}${x.kind === "ปรับ" ? ` · ภายใน ${esc(x.due)}${x.n ? ` · ทบทุก ${x.n} วัน` : ""}` : ""}</div>
       </div>
-      <div class="r"><b>${baht(x.amt)}</b><div style="margin-top:6px">${btns}</div></div>
+      <div class="r"><b>${baht(x.amt)}</b><div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${btns}</div></div>
     </div>`;
   }).join("") || '<div class="m">ไม่มียอดค้างชำระ 🎉</div>';
 }
+
+// 1. คลิกแถวดูรายละเอียดทั้งหมด + QR-Code ผู้แจ้ง
+window.openDueDetail = id => {
+  const x = DUES_LIST.find(d => d.id === id); if (!x) return;
+  let qrSection = `<div class="m" style="text-align:center;padding:12px;background:#f8f9fa;border-radius:12px">ผู้แจ้งไม่ได้แนบรูป QR Code (หรือชำระเป็นเงินสด)</div>`;
+  if (x.qr && /^https?:/.test(x.qr)) {
+    qrSection = `<div style="text-align:center;margin-top:10px">
+      <div style="font-weight:600;margin-bottom:8px">📱 QR Code สำหรับโอนเงินให้ผู้แจ้ง</div>
+      <a href="${esc(x.qr)}" target="_blank" rel="noopener"><img src="${esc(x.qr)}" style="max-width:220px;border-radius:14px;border:1px solid var(--ln);box-shadow:0 4px 12px #0001"></a>
+      <div class="m" style="margin-top:4px">(คลิกที่รูปเพื่อเปิดขนาดเต็ม)</div>
+    </div>`;
+  } else if (x.qr === 'เงินสด') {
+    qrSection = `<div style="text-align:center;padding:12px;background:#e8f8f5;color:#117a49;border-radius:12px;font-weight:600">💵 รายการนี้ผู้แจ้งให้ชำระเป็นเงินสด</div>`;
+  }
+
+  modal(`<h3>📋 รายละเอียดการเรียกเก็บเงิน</h3>
+    <div style="background:#f8f9fc;padding:14px;border-radius:14px;margin-bottom:14px;line-height:1.8">
+      <div>📅 <b>วันที่แจ้ง:</b> ${esc(x.date)}</div>
+      <div>👤 <b>ผู้แจ้ง:</b> ${esc(x.reporter)}</div>
+      <div>📌 <b>ประเภท:</b> ${esc(x.kind)}</div>
+      <div>📝 <b>หมายเหตุ:</b> ${esc(x.note)}</div>
+      <div>💰 <b>จำนวนเงิน:</b> <span style="color:#d63031;font-weight:700">${baht(x.amt)}</span></div>
+      <div>⏳ <b>ชำระภายในวันที่:</b> ${esc(x.due)}</div>
+      <div>⚠️ <b>เงื่อนไขการทบ:</b> ${x.n > 0 ? `หากไม่ชำระตามกำหนด จะทบเงินทุก ๆ ${x.n} วัน` : 'ไม่มีการทบเงิน'}</div>
+    </div>
+    ${qrSection}
+    <button class="btn w" onclick="close()">ปิดหน้าต่าง</button>`);
+};
+
+// 2. กดปุ่ม "ขอผ่อนผัน"
+window.openAppealModal = id => {
+  const x = DUES_LIST.find(d => d.id === id); if (!x) return;
+  modal(`<h3>🙏 ยื่นคำร้องขอผ่อนผัน / ระงับหนี้</h3>
+    <label>ชื่อ-นามสกุล</label><input value="${esc(x.name)}" readonly>
+    <label>เลขที่</label><input value="${esc(x.sn)}" readonly>
+    <label>รายการที่ขอผ่อนผัน</label><input value="${esc(x.kind)}: ${esc(x.note)} (${baht(x.amt)})" readonly>
+    <label>ประเภทคำร้อง</label>
+    <select id="ap-type">
+      <option value="pardon">ขอผ่อนผันหนี้ (ระบุยอดที่จ่ายไหว)</option>
+      <option value="suspend">ขอลด/ระงับการเพิ่มหนี้ชั่วคราว</option>
+    </select>
+    <div id="ap-pay-box">
+      <label>จ่ายได้มากที่สุดกี่บาท (ขั้นต่ำ 30 บาท)</label>
+      <input type="number" id="ap-maxPay" min="30" placeholder="ระบุจำนวนเงิน (>= 30)">
+    </div>
+    <div id="ap-day-box" class="hide">
+      <label>ระยะเวลาขอระงับกี่วัน (ไม่เกิน 30 วัน)</label>
+      <input type="number" id="ap-days" min="1" max="30" placeholder="ระบุจำนวนวัน (1-30 วัน)">
+    </div>
+    <label>เหตุผลประกอบคำร้อง (บังคับกรอก)</label>
+    <textarea id="ap-reason" rows="3" placeholder="ระบุเหตุผลที่ต้องการขอผ่อนผันหรือระงับหนี้..."></textarea>
+    <div class="er" id="ap-err"></div>
+    <div class="op" style="margin-top:14px">
+      <button class="btn" id="ap-ok">ส่งคำร้อง</button>
+      <button class="btn l" onclick="close()">ยกเลิก</button>
+    </div>`);
+
+  $("#ap-type").onchange = () => {
+    const isPardon = $("#ap-type").value === 'pardon';
+    $("#ap-pay-box").classList.toggle("hide", !isPardon);
+    $("#ap-day-box").classList.toggle("hide", isPardon);
+  };
+
+  $("#ap-ok").onclick = async () => {
+    const appealType = $("#ap-type").value;
+    const maxPay = $("#ap-maxPay").value;
+    const days = $("#ap-days").value;
+    const reason = $("#ap-reason").value.trim();
+    if (!reason) return $("#ap-err").textContent = "กรุณากรอกเหตุผล";
+    if (appealType === 'pardon' && Number(maxPay) < 30) return $("#ap-err").textContent = "ยอดที่จ่ายได้ต้อง 30 บาทขึ้นไป";
+    if (appealType === 'suspend' && (Number(days) < 1 || Number(days) > 30)) return $("#ap-err").textContent = "ระยะเวลาต้องอยู่ระหว่าง 1 - 30 วัน";
+
+    $("#ap-ok").disabled = true; $("#ap-err").textContent = "กำลังส่งคำร้อง...";
+    const r = await call("appealDebt", { ...AU(), appealType, maxPay, days, reason, dueAmt: x.amt });
+    if (!r.ok) { $("#ap-err").textContent = r.error; $("#ap-ok").disabled = false; return; }
+    alert(`✅ ยื่นคำร้องเรียบร้อยแล้ว!\nรหัสอ้างอิงของคุณคือ: ${r.vid}`);
+    close(); load();
+  };
+};
+
+// 3. เหรัญญิกยกเลิกรายการค้างชำระ พร้อมบันทึกเหตุผลลง CancellationLogs
+window.cancelChargeModal = id => {
+  const x = DUES_LIST.find(d => d.id === id); if (!x) return;
+  modal(`<h3>🗑️ ยกเลิกรายการเรียกเก็บเงิน</h3>
+    <div class="m" style="color:#d63031;margin-bottom:8px">⚠️ การยกเลิกรายการนี้จะถูกบันทึกชื่อผู้ยกเลิกและเหตุผลลงในประวัติความโปร่งใสให้ทุกคนในห้องเห็น</div>
+    <p><b>${esc(x.name)}</b> (เลขที่ ${esc(x.sn)})<br>รายการ: ${esc(x.kind)} - ${esc(x.note)} (${baht(x.amt)})</p>
+    <label>เหตุผลการยกเลิก (บังคับกรอก)</label>
+    <textarea id="cc-reason" rows="3" placeholder="ระบุเหตุผลที่ยกเลิก เช่น ลงรายการซ้ำ, แจ้งผิดคน..."></textarea>
+    <div class="er" id="cc-err"></div>
+    <div class="op" style="margin-top:14px">
+      <button class="btn warn" id="cc-ok">ยืนยันยกเลิก</button>
+      <button class="btn l" onclick="close()">ปิด</button>
+    </div>`);
+
+  $("#cc-ok").onclick = async () => {
+    const reason = $("#cc-reason").value.trim();
+    if (!reason) return $("#cc-err").textContent = "กรุณาระบุเหตุผลการยกเลิก";
+    $("#cc-ok").disabled = true;
+    const r = await call("cancelCharge", { ...AU(), id, reason });
+    if (!r.ok) { $("#cc-err").textContent = r.error; $("#cc-ok").disabled = false; return; }
+    close(); dues(); load();
+  };
+};
+
+// 4. ดูประวัติการยกเลิก (CancellationLogs)
+window.viewCancelLogs = async () => {
+  modal(`<h3>📜 ประวัติการยกเลิกรายการ</h3><div class="m">กำลังโหลดข้อมูล...</div>`);
+  const r = await call("cancelLogs", AU());
+  const logs = r.logs || [];
+  modal(`<h3>📜 ประวัติการยกเลิกรายการ (ตรวจสอบความโปร่งใส)</h3>
+    <div style="max-height:60vh;overflow:auto">
+      ${logs.map(l => `<div class="rw" style="cursor:default">
+        <div>
+          <b>${esc(l.name)}</b> (เลขที่ ${esc(l.sn)}) · <span style="color:#d63031">${baht(l.amt)}</span>
+          <div class="m">รายการ: ${esc(l.type)} - ${esc(l.note)}</div>
+          <div class="m" style="color:#d63031">เหตุผลยกเลิก: ${esc(l.reason)}</div>
+          <div class="m">ยกเลิกโดย: ${esc(l.by)} · เมื่อ ${esc(l.date)}</div>
+        </div>
+      </div>`).join("") || '<div class="m" style="padding:16px;text-align:center">ยังไม่มีประวัติการยกเลิกรายการ</div>'}
+    </div>
+    <button class="btn w" onclick="close()">ปิด</button>`);
+};
 
 window.openPayModal = id => {
   const x = DUES_LIST.find(d => d.id === id); if (!x) return;
@@ -337,47 +478,60 @@ window.revokePay = async id => {
   if (r.ok) { close(); dues(); load(); } else alert(r.error);
 };
 
-/* ---------- ระบบโหวต/อนุมัติ (หัวหน้าเวร / หัวหน้าห้อง / เหรัญญิก) ---------- */
+/* ---------- ระบบอุทธรณ์ / โหวตอนุมัติ (รองรับการค้นหา + รหัส รง/ป/ผ/รน) ---------- */
 async function votes() {
   const r = await call("votes", AU());
-  const list = r.votes || [];
-  $("#l-votes").innerHTML = list.map(v => {
+  VOTES_LIST = r.votes || [];
+  renderVotes();
+}
+
+function renderVotes() {
+  const q = ($("#v-search")?.value || "").trim().toLowerCase();
+  const filtered = VOTES_LIST.filter(v => 
+    String(v.vid).toLowerCase().includes(q) || 
+    String(v.proposerName).toLowerCase().includes(q) || 
+    String(v.note).toLowerCase().includes(q)
+  );
+
+  $("#l-votes").innerHTML = filtered.map(v => {
     const alreadyVoted = v.voters.includes(String(me.no));
     let canVote = false;
     if (v.status === 'รอโหวต' && !alreadyVoted) {
+      if (me.isPrivileged) canVote = true; // เหรัญญิก/แอดมิน อนุมัติได้
       if (v.proposerPos === 'หัวหน้าเวร' && (me.isDuty || me.isLeader)) canVote = true;
       if (v.proposerPos === 'หัวหน้าห้อง' && v.kind === 'ปรับ' && me.isDuty) canVote = true;
-      if (v.proposerPos === 'หัวหน้าห้อง' && v.kind === 'เก็บเงิน' && me.isPrivileged) canVote = true;
+      if ((v.kind === 'ขอผ่อนผัน' || v.kind === 'ขอระงับหนี้') && (me.isDuty || me.isLeader || me.isPrivileged)) canVote = true;
     }
     return `<div class="rw" style="cursor:default">
       <div>
+        <span class="bd" style="background:#eeebff;color:#5f48e8;margin-right:6px">${esc(v.vid)}</span>
         <b>[${esc(v.kind)}] ${esc(v.note)}</b> · <span style="color:#6c5ce7;font-weight:600">${baht(v.amt)}</span>
-        <div class="m">เสนอโดย: ${esc(v.proposerName)} (${esc(v.proposerPos)}) · วันที่ ${esc(v.date)}</div>
-        <div class="m">ผู้ถูกเรียกเก็บ: ${esc(v.targets)}</div>
-        <div class="m" style="color:#0984e3;font-weight:500">สถานะโหวต: ${esc(v.progressText)}</div>
+        <div class="m">ยื่นโดย: ${esc(v.proposerName)} (${esc(v.proposerPos)}) · วันที่ ${esc(v.date)}</div>
+        <div class="m">ผู้เกี่ยวข้อง: ${esc(v.targets)}</div>
+        <div class="m" style="color:#0984e3;font-weight:500">สถานะ: ${esc(v.progressText)}</div>
       </div>
       <div class="r">
         ${v.status === 'อนุมัติแล้ว' ? '<span class="bd ok">อนุมัติแล้ว</span>' :
-          canVote ? `<button class="btn sm ok" onclick="castVote(${v.id})">👍 โหวตเห็นชอบ / ยินยอม</button>` :
-          alreadyVoted ? '<span class="bd wait">คุณโหวตแล้ว</span>' : '<span class="bd">รอผู้มีสิทธิ์โหวต</span>'}
+          canVote ? `<button class="btn sm ok" onclick="castVote(${v.id})">👍 เห็นชอบ / อนุมัติ</button>` :
+          alreadyVoted ? '<span class="bd wait">คุณโหวตแล้ว</span>' : '<span class="bd">รอผู้มีสิทธิ์อนุมัติ</span>'}
       </div>
     </div>`;
-  }).join("") || '<div class="m">ไม่มีรายการรอโหวตในขณะนี้</div>';
+  }).join("") || '<div class="m">ไม่พบรายการอุทธรณ์</div>';
 }
+if ($("#v-search")) $("#v-search").oninput = renderVotes;
 
 window.castVote = async id => {
-  if (!confirm("ยืนยันการโหวตเห็นชอบรายการนี้?")) return;
+  if (!confirm("ยืนยันการเห็นชอบ/อนุมัติรายการอุทธรณ์นี้?")) return;
   const r = await call("castVote", { ...AU(), id });
   if (r.ok) {
-    alert(r.approved ? "🎉 คะแนนครบเกณฑ์แล้ว! บันทึกรายการลงยอดค้างชำระเรียบร้อย" : "✅ บันทึกเสียงโหวตของคุณเรียบร้อยแล้ว");
+    alert(r.approved ? "🎉 อนุมัติรายการเรียบร้อยแล้ว!" : "✅ บันทึกเสียงโหวตของคุณเรียบร้อยแล้ว");
     votes(); load();
   } else alert(r.error);
 };
 
-/* ---------- เรียกเก็บเงิน / แจ้งปรับ ---------- */
+/* ---------- เรียกเก็บเงิน / แจ้งปรับ (เพิ่มเงินรายเดือน + เพดานหนี้ 30-200 + แนบ QR ผู้แจ้ง) ---------- */
 function chgForm() {
-  const onlyFine = me.isDuty; // หัวหน้าเวรปรับได้อย่างเดียว
-  const fixedFineRates = (me.isDuty || me.isLeader); // หัวหน้าเวรและหัวหน้าห้องปรับได้เฉพาะ 5-30 บาท
+  const onlyFine = me.isDuty;
 
   $("#v-chg").innerHTML = `<h3>🧾 เรียกเก็บเงิน · แจ้งปรับ</h3>
     <div class="op">
@@ -387,37 +541,46 @@ function chgForm() {
     <label>เลือกผู้ชำระ (เลือกได้หลายคน)</label>
     <label style="color:var(--tx)"><input type="checkbox" id="cal"> ทุกคน</label>
     <div style="max-height:160px;overflow:auto;border:1px solid var(--ln);border-radius:12px;padding:8px 12px">${ST.map(s => `<label style="color:var(--tx);margin:4px 0"><input type="checkbox" class="cs" value="${esc(s.no)}"> ${esc(s.no)} · ${esc(s.name)}</label>`).join("")}</div>
-    <label>จำนวนเงิน (บาท)</label>
-    <div id="amt-box"></div>
+    <label>จำนวนเงิน (บาท) <span style="color:#d63031">*กำหนดเพดาน 30 - 200 บาท</span></label>
+    <input id="ca" type="number" min="30" max="200" inputmode="decimal" placeholder="ระบุจำนวนเงิน (30 - 200 บาท)">
     <label>ชำระภายใน (วัน)</label><input id="cg" type="number" value="7">
     <div id="cf" class="hide"><label>หากไม่ชำระภายในกำหนด ให้ทบเงินทุก ๆ ... วัน (นับจากวันที่แจ้ง)</label><input id="cn" type="number" value="7"></div>
-    <div id="cm"></div><div class="er" id="ce"></div><button class="btn" id="cb" style="margin-top:12px">ส่งรายการ</button>`;
+    <div id="cm"></div>
+    <label>QR Code สำหรับรับเงินโอน (แนบเพื่อให้เพื่อนสแกนจ่าย)</label>
+    <label style="color:var(--tx);margin:4px 0"><input type="checkbox" id="ccash"> 💵 รับเป็นเงินสด (ไม่ต้องแนบ QR Code)</label>
+    <input type="file" id="cqr" accept="image/*">
+    <div class="er" id="ce"></div><button class="btn" id="cb" style="margin-top:12px">ส่งรายการ</button>`;
 
   const k = () => document.querySelector("[name=ck]:checked").value;
-  const renderAmtAndNote = () => {
+  const renderNote = () => {
     const f = k() === "ปรับ";
     $("#cf").classList.toggle("hide", !f);
-    if (f && fixedFineRates) {
-      $("#amt-box").innerHTML = `<select id="ca"><option value="5">5 บาท</option><option value="10">10 บาท</option><option value="15">15 บาท</option><option value="20">20 บาท</option><option value="25">25 บาท</option><option value="30">30 บาท</option></select>`;
-    } else {
-      $("#amt-box").innerHTML = `<input id="ca" type="number" inputmode="decimal" placeholder="ระบุจำนวนเงิน">`;
-    }
     $("#cm").innerHTML = f
       ? '<label>เหตุผลการปรับ (กรอกเอง)</label><input id="ct" placeholder="เช่น ไม่ทำเวร, มาสาย">'
-      : '<label>หมายเหตุ</label><select id="cs"><option>เงินรายสัปดาห์</option><option>เงินเฉพาะกิจกรรม</option></select><div id="cx" class="hide"><label>ระบุกิจกรรม (บังคับ)</label><input id="ct"></div>';
+      : '<label>หมายเหตุ</label><select id="cs"><option value="เงินรายสัปดาห์">เงินรายสัปดาห์</option><option value="เงินรายเดือน">เงินรายเดือน</option><option value="เงินเฉพาะกิจกรรม">เงินเฉพาะกิจกรรม</option></select><div id="cx" class="hide"><label>ระบุกิจกรรม (บังคับ)</label><input id="ct" placeholder="เช่น ค่าลูกโป่ง, ค่ากีฬาสี"></div>';
     if (!f) $("#cs").onchange = () => $("#cx").classList.toggle("hide", $("#cs").value !== "เงินเฉพาะกิจกรรม");
   };
 
-  document.querySelectorAll("[name=ck]").forEach(r => r.onchange = renderAmtAndNote);
-  renderAmtAndNote();
+  document.querySelectorAll("[name=ck]").forEach(r => r.onchange = renderNote);
+  renderNote();
+
+  $("#ccash").onchange = () => {
+    $("#cqr").disabled = $("#ccash").checked;
+    if ($("#ccash").checked) $("#cqr").value = "";
+  };
 
   $("#cal").onchange = e => document.querySelectorAll(".cs").forEach(c => c.checked = e.target.checked);
   $("#cb").onclick = async () => {
     const f = k() === "ปรับ", t = $("#ct") ? $("#ct").value.trim() : "", who = $("#cal").checked ? "all" : [...document.querySelectorAll(".cs:checked")].map(c => c.value);
-    const note = f ? t : $("#cs").value === "เงินรายสัปดาห์" ? "เงินรายสัปดาห์" : "เงินเฉพาะกิจกรรม: " + t;
-    if (!who.length || !(+$("#ca").value > 0) || !note || (!f && $("#cs").value !== "เงินรายสัปดาห์" && !t)) return $("#ce").textContent = "กรอกให้ครบ (ผู้ชำระ จำนวนเงิน หมายเหตุ)";
+    const note = f ? t : ($("#cs").value === "เงินเฉพาะกิจกรรม" ? "เงินเฉพาะกิจกรรม: " + t : $("#cs").value);
+    const amt = Number($("#ca").value);
+    
+    if (!who.length || !note || (!f && $("#cs").value === "เงินเฉพาะกิจกรรม" && !t)) return $("#ce").textContent = "กรุณากรอกข้อมูลให้ครบถ้วน";
+    if (amt < 30 || amt > 200) return $("#ce").textContent = "จำนวนเงินต้องอยู่ระหว่าง 30 - 200 บาทเท่านั้น";
+    
     $("#cb").disabled = true; $("#ce").textContent = "กำลังบันทึก...";
-    const r = await call("charge", { ...AU(), kind: k(), who, amt: $("#ca").value, grace: $("#cg").value, n: f ? $("#cn").value : 0, note });
+    const qrVal = $("#ccash").checked ? "เงินสด" : await shrink($("#cqr").files[0]);
+    const r = await call("charge", { ...AU(), kind: k(), who, amt, grace: $("#cg").value, n: f ? $("#cn").value : 0, note, qr: qrVal });
     $("#cb").disabled = false;
     $("#ce").style.color = r.ok ? "#117a49" : "#d63031";
     $("#ce").textContent = r.ok ? r.msg : r.error;
@@ -457,7 +620,7 @@ function setForm() {
 }
 async function logs() {
   const r = await call("logs", AU());
-  $("#l-log").innerHTML = (r.logs || []).map(l => `<div class="rw" style="cursor:default"><div><b>${esc(l.name)}</b><div class="m">เลขที่ ${esc(l.sn)} · ${esc(l.pos)}</div></div><div class="r m">${esc(l.t)}</div></div>`).join("") || '<div class="m">ยังไม่มีประวัติ</div>';
+  $("#l-log").innerHTML = (r.logs || []).map(l => `<div class="rw" style="cursor:default"><div><b>${esc(l.name)}</b><div class="m">เลขที่ ${esc(l.sn)} · ${esc(l.pos)}</div></div><div class="r m">${esc(l.time)}</div></div>`).join("") || '<div class="m">ยังไม่มีประวัติ</div>';
 }
 
 /* ---------- แอดมิน/เหรัญญิก: ดำเนินการเสร็จสิ้นคำร้อง ---------- */
