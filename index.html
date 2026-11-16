@@ -576,7 +576,6 @@ function chgForm() {
     const amt = Number($("#ca").value);
     
     if (!who.length || !note || (!f && $("#cs").value === "เงินเฉพาะกิจกรรม" && !t)) return $("#ce").textContent = "กรุณากรอกข้อมูลให้ครบถ้วน";
-    if (amt < 30 || amt > 200) return $("#ce").textContent = "จำนวนเงินต้องอยู่ระหว่าง 30 - 200 บาทเท่านั้น";
     
     $("#cb").disabled = true; $("#ce").textContent = "กำลังบันทึก...";
     const qrVal = $("#ccash").checked ? "เงินสด" : await shrink($("#cqr").files[0]);
