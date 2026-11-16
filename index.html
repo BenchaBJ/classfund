@@ -1,75 +1,121 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>กองกลางห้อง ม.4/10</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f4fb;--tx:#1f2340;--mu:#6d7290;--ln:#e6e8f2;--g:linear-gradient(135deg,#7c6ae8,#4fa3f0)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Prompt,"Noto Sans Thai",sans-serif}
+:root{--bg:#f2f4fa;--tx:#1b203a;--mu:#646a8a;--ln:#e2e6f3;--g:linear-gradient(135deg,#6c5ce7,#0984e3)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 Prompt,"Noto Sans Thai",sans-serif}
 .hide{display:none!important}button,input,select{font:inherit}
-input:not([type=checkbox]):not([type=radio]),select{width:100%;padding:11px 12px;border:1px solid var(--ln);border-radius:12px;background:#fff}
-label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px}
-.btn{border:0;border-radius:12px;padding:10px 16px;background:var(--g);color:#fff;font-weight:600;cursor:pointer}.btn:disabled{opacity:.4;cursor:not-allowed}
-.btn.w{width:100%;margin-top:14px}.btn.l{background:#fff;color:var(--tx);border:1px solid var(--ln)}
-#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
-.lc{display:flex;width:min(920px,100%);background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 20px 50px #5b4fc722}
-.ll{flex:1.1;background:var(--g);color:#fff;padding:26px;display:flex;flex-direction:column;gap:14px;min-height:420px}
-.ll .im{flex:1;border-radius:18px;background:#ffffff2a center/cover;min-height:160px}
-.ll .nw{background:#ffffff26;border-radius:16px;padding:12px 14px;font-size:14px}.nw b{display:block;margin-bottom:4px}
-.lr{flex:1;padding:30px}.lr h2{margin:0 0 4px}
-.sug{border:1px solid var(--ln);border-radius:12px;margin-top:4px;max-height:170px;overflow:auto}.sug div{padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--ln)}
-.er{color:#d33;font-size:13px;min-height:20px;margin-top:8px}
-#app{display:flex;min-height:100vh}
-aside{width:230px;background:#fff;padding:18px 12px;border-right:1px solid var(--ln);flex-shrink:0}
-aside h3{margin:0 8px 14px;font-size:16px}aside a{display:block;padding:10px 14px;border-radius:12px;cursor:pointer;color:var(--tx);margin-bottom:2px}
-aside a.on{background:#f1ecff;color:#6a55dd;font-weight:600}aside a.off{color:#aab;cursor:default}
-main{flex:1;padding:16px;min-width:0}
-.hd{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:18px;padding:10px 16px;margin-bottom:14px;gap:10px;box-shadow:0 2px 8px #0001}
-.hd b{display:block;line-height:1.2}.hd small{color:var(--mu)}.hd .u{display:flex;align-items:center;gap:12px}
-.bn{background:var(--g);color:#fff;border-radius:22px;padding:24px;margin-bottom:14px}.bn small{opacity:.85}.bn h1{margin:4px 0 0;font-size:20px;line-height:1.4}
-.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.cd{border-radius:18px;padding:16px;color:#fff;min-height:96px}.cd small{display:block;opacity:.9}.cd b{font-size:26px}.cd.c{cursor:pointer}
-.c1{background:linear-gradient(135deg,#ff9f43,#ffc569)}.c2{background:linear-gradient(135deg,#7c6ae8,#9b86f2)}.c3{background:linear-gradient(135deg,#2bc48a,#5fdc9f)}.c4{background:linear-gradient(135deg,#f0508f,#ff7aa8)}.c5{background:linear-gradient(135deg,#3b9cf2,#59b6f5)}.c6{background:linear-gradient(135deg,#14b8c4,#4ed6d9)}
-.pn{background:#fff;border-radius:18px;padding:14px 16px}.pn h3{margin:0 0 6px}
-.rw{display:flex;justify-content:space-between;gap:10px;padding:12px 4px;border-bottom:1px solid var(--ln);cursor:pointer}.rw:last-child{border:0}
-.m{color:var(--mu);font-size:13px}.r{text-align:right;flex-shrink:0}
-.bd{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;background:#fff1d6;color:#a35c00}.bd.ok{background:#d8f6e6;color:#157a4c}
-.chip{margin:4px 4px 0 0;padding:8px 12px}.hd #hn{cursor:pointer}
-.ft{display:flex;gap:16px;margin:6px 0 4px;flex-wrap:wrap}.ft label{display:flex;align-items:center;gap:6px;margin:0;color:var(--tx)}
-#md{position:fixed;inset:0;background:#0007;display:flex;align-items:center;justify-content:center;padding:14px;z-index:9}
-.bx{background:#fff;border-radius:22px;padding:20px;width:min(460px,100%);max-height:92vh;overflow:auto}.bx h3{margin:0 0 6px}
-.op{display:flex;gap:14px}.op label{display:flex;align-items:center;gap:6px;margin:0;color:var(--tx)}
-.ok2{text-align:center;font-size:22px;padding:20px}
-@media(max-width:760px){.lc{flex-direction:column}#app{flex-direction:column}aside{width:auto;display:flex;overflow-x:auto;padding:8px;border:0}aside h3{display:none}aside a{white-space:nowrap}}
+input:not([type=checkbox]):not([type=radio]),select{width:100%;padding:12px 14px;border:1px solid var(--ln);border-radius:12px;background:#fff;transition:.2s}
+input:focus,select:focus{outline:none;border-color:#6c5ce7;box-shadow:0 0 0 3px #6c5ce722}
+label{display:block;font-size:13px;color:var(--mu);margin:12px 0 4px;font-weight:500}
+.btn{border:0;border-radius:12px;padding:10px 18px;background:var(--g);color:#fff;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:hover{opacity:.92;transform:translateY(-1px)}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.w{width:100%;margin-top:16px}.btn.l{background:#fff;color:var(--tx);border:1px solid var(--ln)}
+.btn.sm{padding:6px 12px;font-size:13px;border-radius:9px}
+.btn.ok{background:linear-gradient(135deg,#00b894,#00cec9)}.btn.warn{background:linear-gradient(135deg,#e17055,#d63031)}
+
+/* Login */
+#login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.lc{display:flex;width:min(980px,100%);background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 24px 60px #4834d41f}
+.ll{flex:1.15;background:var(--g);color:#fff;padding:32px;display:flex;flex-direction:column;gap:16px;min-height:460px}
+.ll .im{flex:1;border-radius:20px;background:#ffffff2a center/cover;min-height:180px}
+.ll .nw{background:#ffffff24;backdrop-filter:blur(6px);border-radius:16px;padding:14px 16px;font-size:14px}.nw b{display:block;margin-bottom:4px;font-size:15px}
+.lr{flex:1;padding:36px}.lr h2{margin:0 0 4px;font-size:24px}
+.sug{border:1px solid var(--ln);border-radius:12px;margin-top:4px;max-height:180px;overflow:auto;background:#fff;box-shadow:0 8px 20px #0001}
+.sug div{padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--ln)}.sug div:hover{background:#f5f6ff}
+.er{color:#d63031;font-size:13px;min-height:20px;margin-top:8px}
+
+/* Main App Layout (ขยายให้กว้างเต็มตา) */
+#app{display:flex;min-height:100vh;max-width:1600px;margin:0 auto}
+aside{width:260px;background:#fff;padding:24px 16px;border-right:1px solid var(--ln);flex-shrink:0;display:flex;flex-direction:column;gap:4px}
+aside h3{margin:0 10px 18px;font-size:18px;color:#4834d4}
+aside a{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;cursor:pointer;color:var(--tx);font-weight:500;transition:.15s}
+aside a:hover{background:#f4f5fc}
+aside a.on{background:#eeebff;color:#5f48e8;font-weight:600}
+.pill{background:#ff4757;color:#fff;font-size:11px;padding:2px 8px;border-radius:99px;font-weight:700}
+
+main{flex:1;padding:24px 32px;min-width:0}
+.hd{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:20px;padding:14px 22px;margin-bottom:22px;gap:14px;box-shadow:0 4px 16px #1b203a0a}
+.hd b{display:block;font-size:16px;line-height:1.3}.hd small{color:var(--mu);font-size:13px}.hd .u{display:flex;align-items:center;gap:16px}
+
+/* Banner & Dashboard Grid (ปรับขนาดการ์ดให้ใหญ่และดูดี) */
+.bn{background:var(--g);color:#fff;border-radius:26px;padding:32px 36px;margin-bottom:24px;box-shadow:0 12px 30px #6c5ce733;position:relative;overflow:hidden}
+.bn small{opacity:.9;font-size:14px;letter-spacing:.5px;text-transform:uppercase}.bn h1{margin:6px 0 0;font-size:24px;line-height:1.45;font-weight:700}
+.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
+.cd{border-radius:22px;padding:24px 26px;color:#fff;min-height:130px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 8px 20px #00000012;transition:.2s}
+.cd:hover{transform:translateY(-3px)}
+.cd small{display:block;opacity:.92;font-size:14px;font-weight:500}.cd b{font-size:32px;letter-spacing:-.5px}.cd.c{cursor:pointer}
+.c1{background:linear-gradient(135deg,#ff9f43,#ffbe76)}.c2{background:linear-gradient(135deg,#6c5ce7,#a29bfe)}
+.c3{background:linear-gradient(135deg,#00b894,#55efc4)}.c4{background:linear-gradient(135deg,#e84393,#fd79a8)}
+.c5{background:linear-gradient(135deg,#0984e3,#74b9ff)}.c6{background:linear-gradient(135deg,#00cec9,#81ecec)}
+
+.pn{background:#fff;border-radius:24px;padding:24px 28px;box-shadow:0 4px 20px #1b203a08}
+.pn h3{margin:0 0 12px;font-size:19px}
+.rw{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 8px;border-bottom:1px solid var(--ln);cursor:pointer;transition:.15s}
+.rw:hover{background:#fafbfe}.rw:last-child{border:0}
+.m{color:var(--mu);font-size:13.5px}.r{text-align:right;flex-shrink:0}
+.bd{display:inline-block;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:600;background:#fff1d6;color:#b26200}
+.bd.ok{background:#d8f6e6;color:#117a49}.bd.wait{background:#e3f2fd;color:#0984e3}
+.chip{margin:4px 6px 4px 0;padding:10px 14px}.hd #hn{cursor:pointer}
+.ft{display:flex;gap:18px;margin:8px 0 12px;flex-wrap:wrap}.ft label{display:flex;align-items:center;gap:6px;margin:0;color:var(--tx);cursor:pointer}
+
+/* Modal */
+#md{position:fixed;inset:0;background:#1b203a88;backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;padding:16px;z-index:99}
+.bx{background:#fff;border-radius:26px;padding:28px;width:min(520px,100%);max-height:92vh;overflow:auto;box-shadow:0 24px 60px #0003}.bx h3{margin:0 0 8px;font-size:20px}
+.op{display:flex;gap:16px;flex-wrap:wrap;align-items:center}.op label{display:flex;align-items:center;gap:6px;margin:0;color:var(--tx);cursor:pointer}
+.ok2{text-align:center;font-size:24px;padding:24px;font-weight:600}
+
+@media(max-width:860px){
+  .lc{flex-direction:column}#app{flex-direction:column}
+  aside{width:auto;flex-direction:row;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid var(--ln)}
+  aside h3{display:none}aside a{white-space:nowrap;padding:9px 14px}
+  main{padding:16px}.bn{padding:22px}.bn h1{font-size:19px}.cd b{font-size:26px}
+}
 </style></head><body>
 
 <div id="login"><div class="lc">
-  <div class="ll"><div class="im" id="lim"></div><div class="nw"><b>📢 ประกาศ</b><div id="news">กำลังโหลด...</div></div></div>
+  <div class="ll"><div class="im" id="lim"></div><div class="nw"><b>📢 ประกาศห้อง</b><div id="news">กำลังโหลด...</div></div></div>
   <div class="lr"><h2>เข้าสู่ระบบ</h2><div class="m">ระบบกองกลางห้อง ม.4/10</div>
-    <label>ชื่อ-นามสกุล (พิมพ์ไม่กี่ตัวแล้วเลือก)</label><input id="nm" autocomplete="off"><div id="sg" class="sug hide"></div>
-    <label>เลขที่</label><input id="no" readonly><label>รหัส</label><input id="pw" type="password">
+    <label>ชื่อ-นามสกุล (พิมพ์ไม่กี่ตัวแล้วเลือก)</label><input id="nm" autocomplete="off" placeholder="พิมพ์ชื่อหรือนามสกุล..."><div id="sg" class="sug hide"></div>
+    <label>เลขที่</label><input id="no" readonly><label>รหัสผ่าน</label><input id="pw" type="password">
     <button class="btn w" id="go">เข้าสู่ระบบ</button><div class="er" id="er"></div></div>
 </div></div>
 
 <div id="app" class="hide">
   <aside><h3>กองกลางห้อง ม.4/10</h3>
-    <a data-v="home" class="on">🏠 หน้าแรก</a><a data-v="claims">📝 คำร้อง</a><a data-v="prog">📈 ติดตามความก้าวหน้า</a>
-    <a data-v="dues">💳 ยอดค้างชำระ</a><a data-v="chg" class="ad hide">🧾 เรียก/แจ้งปรับ</a><a data-v="docs">📚 เอกสาร</a><a data-v="set">⚙️ ตั้งค่า</a><a data-v="log" class="ad hide">🕘 ประวัติเข้าสู่ระบบ</a></aside>
+    <a data-v="home" class="on"><span>🏠 หน้าแรก</span></a>
+    <a data-v="claims"><span>📝 คำร้อง</span></a>
+    <a data-v="prog"><span>📈 ติดตามความก้าวหน้า</span></a>
+    <a data-v="dues"><span>💳 ยอดค้างชำระ</span></a>
+    <a data-v="votes" id="nav-votes" class="hide"><span>🗳️ โหวต/อนุมัติปรับ</span><span class="pill hide" id="v-badge">0</span></a>
+    <a data-v="chg" id="nav-chg" class="hide"><span>🧾 เรียกเก็บเงิน/ปรับ</span></a>
+    <a data-v="docs"><span>📚 เอกสาร / การบ้าน</span></a>
+    <a data-v="set"><span>⚙️ ตั้งค่า</span></a>
+    <a data-v="log" class="ad hide"><span>🕘 ประวัติเข้าสู่ระบบ</span></a>
+  </aside>
   <main>
-    <div class="hd"><div class="u"><div><b id="hn"></b><small id="hp"></small></div><button class="btn" id="nc">➕ คำร้อง</button></div><button class="btn l" id="out">ออก</button></div>
+    <div class="hd"><div class="u"><div><b id="hn"></b><small id="hp"></small></div><button class="btn" id="nc">➕ ยื่นคำร้อง</button></div><button class="btn l" id="out">ออกจากระบบ</button></div>
+    
     <div id="v-home">
       <div class="bn"><small>ปีงบประมาณ <span class="y"></span></small><h1>นักเรียนมัธยมศึกษา โรงเรียนเบญจมราชูทิศ จังหวัดจันทบุรี ชั้น ม.4/10</h1></div>
       <div class="gr">
-        <div class="cd c1 c" data-v="claims"><small>เช็ครายการคำร้อง</small><b>เปิดดู →</b></div>
-        <div class="cd c2 c" data-v="claims"><small>ขออนุมัติเบิกจ่ายเงิน (รออนุมัติ)</small><b id="k-wait">-</b></div>
-        <div class="cd c5"><small>เงินรวมของห้อง</small><b id="k-bal">-</b></div>
-        <div class="cd c6"><small>จำนวนรายจ่าย</small><b id="k-exp">-</b></div>
-        <div class="cd c3 c" data-v="prog"><small>เสร็จสิ้นคำร้องแล้ว</small><b id="k-done">-</b></div>
-        <div class="cd c4"><small>ยอดค้างชำระ</small><b id="k-due">-</b></div>
-      </div></div>
+        <div class="cd c1 c" data-v="claims"><small>เช็ครายการคำร้องทั้งหมด</small><b>เปิดดูรายการ →</b></div>
+        <div class="cd c2 c" data-v="claims"><small>คำร้องรออนุมัติเบิกจ่าย</small><b id="k-wait">-</b></div>
+        <div class="cd c5"><small>ยอดเงินรวมของห้องปัจจุบัน</small><b id="k-bal">-</b></div>
+        <div class="cd c6"><small>ยอดรายจ่ายทั้งหมด</small><b id="k-exp">-</b></div>
+        <div class="cd c3 c" data-v="prog"><small>ดำเนินการคำร้องเสร็จสิ้น</small><b id="k-done">-</b></div>
+        <div class="cd c4 c" data-v="dues"><small id="k-due-lbl">ยอดค้างชำระ</small><b id="k-due">-</b></div>
+      </div>
+    </div>
+
     <div id="v-claims" class="hide pn"><h3>รายการคำร้อง</h3>
       <div class="ft"><label><input type="checkbox" id="fb" checked> บ (เบิกเงิน)</label><label><input type="checkbox" id="fk" checked> ข (ให้ซื้อ)</label></div><div id="l-claims"></div></div>
-    <div id="v-dues" class="hide pn"><h3>ยอดค้างชำระ</h3><div id="l-dues"></div></div>
-    <div id="v-chg" class="hide pn"></div><div id="v-docs" class="hide pn"></div><div id="v-set" class="hide pn"></div>
+    <div id="v-dues" class="hide pn"><h3>ยอดค้างชำระ & ค่าปรับ</h3><div id="l-dues"></div></div>
+    <div id="v-votes" class="hide pn"><h3>🗳️ รายการรอโหวต / ยินยอม</h3><div id="l-votes"></div></div>
+    <div id="v-chg" class="hide pn"></div>
+    <div id="v-docs" class="hide pn"></div>
+    <div id="v-set" class="hide pn"></div>
     <div id="v-log" class="hide pn"><h3>ประวัติการเข้าสู่ระบบ</h3><div id="l-log"></div></div>
     <div id="v-prog" class="hide pn"><h3>ติดตามความก้าวหน้า (ดำเนินการสำเร็จแล้ว)</h3><div id="l-prog"></div></div>
   </main>
@@ -77,11 +123,11 @@ main{flex:1;padding:16px;min-width:0}
 <div id="md" class="hide"></div>
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbxh_Xd_d1qcCUXTbrovnXkfnbS6Chi98PPf9atOdunqVykI841C9GzNaZM636g0LTH3/exec"; // ← ถ้าโฮสต์บน GitHub: วางลิงก์เว็บแอป Apps Script (ลงท้าย /exec) ตรงนี้ / ถ้าเปิดจากลิงก์ Apps Script เอง ปล่อยว่างได้
+const API = "https://script.google.com/macros/s/AKfycbxh_Xd_d1qcCUXTbrovnXkfnbS6Chi98PPf9atOdunqVykI841C9GzNaZM636g0LTH3/exec";
 const $ = s => document.querySelector(s), baht = n => "฿" + Number(n || 0).toLocaleString("th-TH");
 const esc = t => String(t == null ? "" : t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
-let me = null, ST = [], D = null;
+let me = null, ST = [], D = null, DUES_LIST = [];
 
 function call(a, p = {}) {
   const b = JSON.stringify({ a, ...p });
@@ -109,121 +155,281 @@ call("pub").then(r => {
   $("#news").innerHTML = (r.news || []).map(esc).join("<br>") || "-";
   if (/^https?:/.test(r.img || "")) $("#lim").style.backgroundImage = `url("${r.img}")`;
 }).catch(() => $("#news").textContent = "เชื่อมต่อไม่ได้");
+
 $("#nm").oninput = e => {
   const q = e.target.value.trim(), b = $("#sg"); $("#no").value = ""; me = null;
   const h = q ? ST.filter(s => s.name.includes(q)).slice(0, 8) : [];
   b.classList.toggle("hide", !h.length); b.innerHTML = "";
   h.forEach(s => { const d = document.createElement("div"); d.textContent = s.name + " (เลขที่ " + s.no + ")"; d.onclick = () => { $("#nm").value = s.name; $("#no").value = s.no; me = { no: s.no, name: s.name }; b.classList.add("hide"); }; b.appendChild(d); });
 };
+
 $("#go").onclick = async () => {
   $("#er").textContent = ""; if (!me) return $("#er").textContent = "กรุณาเลือกชื่อจากรายการ";
   me.pw = $("#pw").value;
   try {
     const r = await call("login", { no: me.no, pw: me.pw });
     if (!r.ok) return $("#er").textContent = r.error;
-    me.pos = r.pos; me.name = r.name; me.admin = false;
-    if (r.canAdmin) return modal(`<h3>🔑 รหัสแอดมิน</h3><div class="m">ตำแหน่งแอดมิน ต้องกรอกรหัสอีกชั้นก่อนเข้าระบบ</div><label>รหัสแอดมิน</label><input id="ap" type="password"><div class="er" id="ae"></div><div class="op" style="margin-top:10px"><button class="btn" id="aok">ยืนยัน</button><button class="btn l" id="acx">ยกเลิก</button></div>`),
-      $("#acx").onclick = close, $("#aok").onclick = async () => {
+    Object.assign(me, r);
+    if (r.canAdmin) {
+      modal(`<h3>🔑 รหัสแอดมิน</h3><div class="m">ตำแหน่งแอดมิน ต้องกรอกรหัสอีกชั้นก่อนเข้าระบบ</div><label>รหัสแอดมิน</label><input id="ap" type="password"><div class="er" id="ae"></div><div class="op" style="margin-top:14px"><button class="btn" id="aok">ยืนยัน</button><button class="btn l" id="acx">ยกเลิก</button></div>`);
+      $("#acx").onclick = close;
+      $("#aok").onclick = async () => {
         const a = await call("adminLogin", { no: me.no, pw: me.pw, apw: $("#ap").value });
-        if (!a.ok) return $("#ae").textContent = a.error; me.admin = true; me.apw = $("#ap").value; close(); enter();
+        if (!a.ok) return $("#ae").textContent = a.error;
+        me.apw = $("#ap").value; close(); enter();
       };
+      return;
+    }
     enter();
   } catch (e) { $("#er").textContent = "เชื่อมต่อไม่ได้ ลองใหม่อีกครั้ง"; }
 };
-function enter() { $("#login").classList.add("hide"); $("#app").classList.remove("hide"); $("#hn").textContent = me.name; $("#hp").textContent = me.pos + " · เลขที่ " + me.no; document.querySelectorAll(".ad").forEach(a => a.classList.toggle("hide", !me.admin)); $("#hn").onclick = () => view("set"); view("home"); }
+
+function enter() {
+  $("#login").classList.add("hide"); $("#app").classList.remove("hide");
+  $("#hn").textContent = me.name; $("#hp").textContent = me.pos + " · เลขที่ " + me.no;
+  document.querySelectorAll(".ad").forEach(a => a.classList.toggle("hide", !me.isPrivileged));
+  $("#nav-chg").classList.toggle("hide", !me.canCreateCharge);
+  $("#nav-votes").classList.toggle("hide", !(me.isDuty || me.isLeader || me.isPrivileged));
+  $("#k-due-lbl").textContent = me.isPrivileged ? "ยอดค้างชำระรวมทั้งห้อง" : "ยอดค้างชำระของคุณ";
+  $("#hn").onclick = () => view("set"); view("home");
+}
 $("#out").onclick = () => location.reload();
 
 /* ---------- หน้าต่าง ๆ ---------- */
 function view(v) {
-  ["home", "claims", "prog", "dues", "chg", "docs", "set", "log"].forEach(x => $("#v-" + x).classList.toggle("hide", x !== v));
-  ({ dues, chg: chgForm, docs, set: setForm, log: logs })[v]?.();
+  ["home", "claims", "prog", "dues", "votes", "chg", "docs", "set", "log"].forEach(x => $("#v-" + x).classList.toggle("hide", x !== v));
+  ({ dues, votes, chg: chgForm, docs, set: setForm, log: logs })[v]?.();
   document.querySelectorAll("aside a[data-v]").forEach(a => a.classList.toggle("on", a.dataset.v === v));
   load();
 }
 document.querySelectorAll("[data-v]").forEach(e => e.onclick = () => view(e.dataset.v));
+
 async function load() {
   const d = await call("data", { no: me.no, pw: me.pw }); if (!d.ok) return; D = d;
   $("#k-bal").textContent = baht(d.bal); $("#k-exp").textContent = baht(d.exp); $("#k-due").textContent = baht(d.due);
   $("#k-wait").textContent = d.wait + " รายการ"; $("#k-done").textContent = d.done + " รายการ";
+  $("#v-badge").textContent = d.pendingVotes || 0;
+  $("#v-badge").classList.toggle("hide", !d.pendingVotes);
   draw();
 }
+
 const rowH = (c, adm) => `<div class="rw" data-i="${c.id}"><div><b>${esc(c.no)}</b> · ${esc(c.type)}: ${esc(c.item)}<div class="m">${esc(c.name)} · เลขที่ ${esc(c.sn)} · ${esc(c.date)}</div></div><div class="r"><b>${baht(c.amt)}</b><br>${c.st === "สำเร็จ" ? '<span class="bd ok">สำเร็จ</span>' : adm ? `<label class="m" style="margin:0"><input type="checkbox" class="ap" data-i="${c.id}"> เสร็จสิ้น</label>` : '<span class="bd">รออนุมัติ</span>'}</div></div>`;
 function draw() {
   if (!D) return;
   const fb = $("#fb").checked, fk = $("#fk").checked;
   const a = D.claims.filter(c => (String(c.no)[0] === "บ" ? fb : fk));
-  $("#l-claims").innerHTML = a.map(c => rowH(c, me.admin)).join("") || '<div class="m">ยังไม่มีคำร้อง</div>';
+  $("#l-claims").innerHTML = a.map(c => rowH(c, me.isPrivileged)).join("") || '<div class="m">ยังไม่มีคำร้อง</div>';
   $("#l-prog").innerHTML = D.claims.filter(c => c.st === "สำเร็จ").map(c => rowH(c, false)).join("") || '<div class="m">ยังไม่มีคำร้องที่สำเร็จ</div>';
 }
 $("#fb").onchange = $("#fk").onchange = draw;
-const lk = (u, t) => /^https?:/.test(u || "") ? `<div><a href="${esc(u)}" target="_blank" rel="noopener">${t}</a></div>` : "";
+
+const lk = (u, t) => u === "เงินสด" ? `<div>💵 <b>รับเป็นเงินสด</b></div>` : /^https?:/.test(u || "") ? `<div><a href="${esc(u)}" target="_blank" rel="noopener">${t}</a></div>` : "";
 function onList(e) {
   const i = e.target.dataset.i;
   if (e.target.classList.contains("ap")) { e.target.checked = false; return approve(i); }
   const r = e.target.closest(".rw"); if (!r || e.target.tagName === "INPUT" || e.target.tagName === "LABEL") return;
   const c = D.claims.find(x => x.id == r.dataset.i);
-  modal(`<h3>คำร้อง ${esc(c.no)}</h3><div class="m">${esc(c.name)} · เลขที่ ${esc(c.sn)} · ${esc(c.date)}</div><p><b>${esc(c.type)}</b>: ${esc(c.item)}<br><b>${baht(c.amt)}</b></p><span class="bd ${c.st === "สำเร็จ" ? "ok" : ""}">${esc(c.st)}</span>${c.done ? `<div class="m">เสร็จสิ้นเมื่อ ${esc(c.done)}</div>` : ""}${lk(c.rc, "🧾 ดูบิก/ใบเสร็จ")}${lk(c.qr, "📱 ดู QR ผู้แจ้ง")}${lk(c.slip, "✅ ดูหลักฐานการโอนเงิน")}<button class="btn w" onclick="close()">ปิด</button>`);
+  modal(`<h3>คำร้อง ${esc(c.no)}</h3><div class="m">${esc(c.name)} · เลขที่ ${esc(c.sn)} · ${esc(c.date)}</div><p><b>${esc(c.type)}</b>: ${esc(c.item)}<br><b>${baht(c.amt)}</b></p><span class="bd ${c.st === "สำเร็จ" ? "ok" : ""}">${esc(c.st)}</span>${c.done ? `<div class="m">เสร็จสิ้นเมื่อ ${esc(c.done)}</div>` : ""}${lk(c.rc, "🧾 ดูบิล/ใบเสร็จ")}${lk(c.qr, "📱 ดู QR ผู้แจ้ง")}${lk(c.slip, "✅ ดูหลักฐานการโอนเงิน")}<button class="btn w" onclick="close()">ปิด</button>`);
 }
 $("#l-claims").onclick = $("#l-prog").onclick = onList;
 
-/* ---------- ยื่นคำร้อง ---------- */
+/* ---------- ยื่นคำร้อง (รองรับติ๊กเงินสด) ---------- */
 $("#nc").onclick = () => {
-  modal(`<h3>📝 คำร้อง</h3><label>ชื่อ-นามสกุล</label><input value="${esc(me.name)}" readonly><label>เลขที่</label><input value="${esc(me.no)}" readonly>
+  modal(`<h3>📝 ยื่นคำร้อง</h3><label>ชื่อ-นามสกุล</label><input value="${esc(me.name)}" readonly><label>เลขที่</label><input value="${esc(me.no)}" readonly>
   <label>วันที่</label><input type="date" id="rd" value="${today()}"><label>ประเภท</label>
   <div class="op"><label><input type="radio" name="rt" value="เบิกเงิน" checked> เบิกจ่ายเงิน</label><label><input type="radio" name="rt" value="ให้ซื้อ"> ให้ซื้อ</label></div>
   <label>ซื้ออะไร / เบิกเพื่ออะไร</label><input id="ri" placeholder="เช่น ปากกาไวท์บอร์ด"><label>จำนวนเงิน (บาท)</label><input id="ra" type="number" inputmode="decimal">
-  <label id="rcl">แนบบิล/ใบเสร็จ (บังคับ)</label><input id="rc" type="file" accept="image/*"><label>แนบรูป QR Code ของผู้แจ้ง (บังคับ)</label><input id="rq" type="file" accept="image/*">
-  <div class="er" id="re"></div><div class="op" style="margin-top:10px"><button class="btn" id="rs" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
-  const t = () => document.querySelector("[name=rt]:checked").value, ok = () => { $("#rcl").textContent = t() === "เบิกเงิน" ? "แนบบิล/ใบเสร็จ (บังคับ)" : "แนบบิล/ใบเสร็จ (ไม่บังคับ)"; $("#rs").disabled = !($("#rd").value && $("#ri").value.trim() && $("#ra").value > 0 && $("#rq").files[0] && (t() !== "เบิกเงิน" || $("#rc").files[0])); };
+  <label id="rcl">แนบบิล/ใบเสร็จ (บังคับ)</label><input id="rc" type="file" accept="image/*">
+  <label>ช่องทางรับเงิน / QR Code</label>
+  <label style="color:var(--tx);margin:4px 0"><input type="checkbox" id="rcash"> 💵 รับเป็นเงินสด (ไม่ต้องแนบรูป QR Code)</label>
+  <input id="rq" type="file" accept="image/*">
+  <div class="er" id="re"></div><div class="op" style="margin-top:14px"><button class="btn" id="rs" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
+  
+  const t = () => document.querySelector("[name=rt]:checked").value;
+  const ok = () => {
+    const isCash = $("#rcash").checked;
+    $("#rq").disabled = isCash;
+    if (isCash) $("#rq").value = "";
+    $("#rcl").textContent = t() === "เบิกเงิน" ? "แนบบิล/ใบเสร็จ (บังคับ)" : "แนบบิล/ใบเสร็จ (ไม่บังคับ)";
+    $("#rs").disabled = !($("#rd").value && $("#ri").value.trim() && $("#ra").value > 0 && (isCash || $("#rq").files[0]) && (t() !== "เบิกเงิน" || $("#rc").files[0]));
+  };
   $("#md").oninput = $("#md").onchange = ok;
   $("#rs").onclick = async () => {
     $("#rs").disabled = true; $("#re").textContent = "กำลังส่ง...";
-    try { const r = await call("request", { no: me.no, pw: me.pw, date: $("#rd").value, type: t(), item: $("#ri").value, amt: $("#ra").value, rc: await shrink($("#rc").files[0]), qr: await shrink($("#rq").files[0]) });
+    try {
+      const qrVal = $("#rcash").checked ? "เงินสด" : await shrink($("#rq").files[0]);
+      const r = await call("request", { no: me.no, pw: me.pw, date: $("#rd").value, type: t(), item: $("#ri").value, amt: $("#ra").value, rc: await shrink($("#rc").files[0]), qr: qrVal });
       if (!r.ok) { $("#re").textContent = r.error; return ok(); } close(); view("claims");
     } catch (e) { $("#re").textContent = "ส่งไม่สำเร็จ ลองใหม่อีกครั้ง"; ok(); }
   };
 };
 
-/* ---------- ยอดค้างชำระ ---------- */
+/* ---------- ยอดค้างชำระ (ปุ่มจ่ายแล้ว + แนบสลิป + เหรัญญิกเพิกถอน) ---------- */
 const AU = () => ({ no: me.no, pw: me.pw, apw: me.apw });
 async function dues() {
   const r = await call("dues", AU());
-  $("#l-dues").innerHTML = (r.dues || []).map(x => `<div class="rw" style="cursor:default"><div><b>${esc(x.name)}</b> · เลขที่ ${esc(x.sn)}<div class="m">แจ้งเมื่อ ${esc(x.date)} · ${esc(x.kind)} · ${esc(x.note)}${x.kind === "ปรับ" ? ` · ชำระภายใน ${esc(x.due)}${x.n ? ` · ทบทุก ${x.n} วัน` : ""}` : ""}</div></div><div class="r"><b>${baht(x.amt)}</b>${me.admin ? `<br><label class="m" style="margin:0"><input type="checkbox" class="pd" data-i="${x.id}"> ชำระแล้ว</label>` : ""}</div></div>`).join("") || '<div class="m">ไม่มียอดค้างชำระ 🎉</div>';
+  DUES_LIST = r.dues || [];
+  $("#l-dues").innerHTML = DUES_LIST.map(x => {
+    let badge = '<span class="bd">ค้างชำระ</span>';
+    if (x.status === 'รอตรวจสอบ') badge = '<span class="bd wait">รอเหรัญญิกตรวจสอบ</span>';
+    if (x.status === 'ชำระแล้ว') badge = '<span class="bd ok">จ่ายแล้ว</span>';
+
+    let btns = '';
+    if (x.status === 'ค้าง') {
+      btns += `<button class="btn sm ok" onclick="openPayModal(${x.id})">จ่ายแล้ว</button> `;
+    }
+    if (me.isPrivileged) {
+      if (x.status === 'รอตรวจสอบ') {
+        btns += `<button class="btn sm" onclick="reviewPay(${x.id})">ตรวจสลิป</button> `;
+      }
+      if (x.status === 'รอตรวจสอบ' || x.status === 'ชำระแล้ว') {
+        btns += `<button class="btn sm warn" onclick="revokePay(${x.id})">เพิกถอน</button>`;
+      }
+    }
+    return `<div class="rw" style="cursor:default">
+      <div><b>${esc(x.name)}</b> · เลขที่ ${esc(x.sn)} ${badge}
+        <div class="m">แจ้งเมื่อ ${esc(x.date)} · <b>${esc(x.kind)}</b>: ${esc(x.note)}${x.kind === "ปรับ" ? ` · ภายใน ${esc(x.due)}${x.n ? ` · ทบทุก ${x.n} วัน` : ""}` : ""}</div>
+      </div>
+      <div class="r"><b>${baht(x.amt)}</b><div style="margin-top:6px">${btns}</div></div>
+    </div>`;
+  }).join("") || '<div class="m">ไม่มียอดค้างชำระ 🎉</div>';
 }
-$("#l-dues").onchange = async e => {
-  if (!e.target.classList.contains("pd")) return;
-  if (!confirm("ยืนยันว่าชำระแล้ว?")) return e.target.checked = false;
-  const r = await call("paid", { ...AU(), id: e.target.dataset.i });
-  if (r.ok) { dues(); load(); } else { alert(r.error); e.target.checked = false; }
+
+window.openPayModal = id => {
+  const x = DUES_LIST.find(d => d.id === id); if (!x) return;
+  modal(`<h3>💳 แจ้งชำระเงิน</h3>
+    <label>ชื่อ-นามสกุล</label><input value="${esc(x.name)}" readonly>
+    <label>เลขที่</label><input value="${esc(x.sn)}" readonly>
+    <label>รายการที่โดน (${esc(x.kind)})</label><input value="${esc(x.note)} (${baht(x.amt)})" readonly>
+    <label>แนบหลักฐานการชำระเงิน / สลิป (บังคับ)</label><input type="file" id="pslip" accept="image/*">
+    <div class="er" id="pe"></div>
+    <div class="op" style="margin-top:14px"><button class="btn ok" id="pok" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
+  $("#pslip").onchange = () => $("#pok").disabled = !$("#pslip").files[0];
+  $("#pok").onclick = async () => {
+    $("#pok").disabled = true; $("#pe").textContent = "กำลังอัปโหลดหลักฐาน...";
+    const r = await call("submitPay", { ...AU(), id, slip: await shrink($("#pslip").files[0]) });
+    if (!r.ok) { $("#pe").textContent = r.error; $("#pok").disabled = false; return; }
+    close(); dues(); load();
+  };
 };
-/* ---------- เรียก/แจ้งชำระ/ปรับ (แอดมิน) ---------- */
+
+window.reviewPay = id => {
+  const x = DUES_LIST.find(d => d.id === id); if (!x) return;
+  modal(`<h3>🔍 ตรวจสอบหลักฐานการชำระเงิน</h3>
+    <p><b>${esc(x.name)}</b> (เลขที่ ${esc(x.sn)})<br>รายการ: ${esc(x.kind)} - ${esc(x.note)}<br>ยอดเงิน: <b>${baht(x.amt)}</b></p>
+    ${lk(x.slip, "🧾 คลิกเปิดดูรูปหลักฐานการโอนเงิน")}
+    <div class="op" style="margin-top:16px">
+      <button class="btn ok" onclick="confirmPay(${x.id})">✅ ยืนยันว่าจ่ายแล้ว</button>
+      <button class="btn warn" onclick="revokePay(${x.id})">❌ เพิกถอน (สลิปไม่ถูกต้อง)</button>
+      <button class="btn l" onclick="close()">ปิด</button>
+    </div>`);
+};
+
+window.confirmPay = async id => {
+  if (!confirm("ยืนยันว่าได้รับเงินเรียบร้อยแล้ว?")) return;
+  const r = await call("confirmPay", { ...AU(), id });
+  if (r.ok) { close(); dues(); load(); } else alert(r.error);
+};
+
+window.revokePay = async id => {
+  if (!confirm("ต้องการเพิกถอนสถานะการจ่ายเงิน ให้กลับไปเป็นค้างชำระใช่หรือไม่?")) return;
+  const r = await call("revokePay", { ...AU(), id });
+  if (r.ok) { close(); dues(); load(); } else alert(r.error);
+};
+
+/* ---------- ระบบโหวต/อนุมัติ (หัวหน้าเวร / หัวหน้าห้อง / เหรัญญิก) ---------- */
+async function votes() {
+  const r = await call("votes", AU());
+  const list = r.votes || [];
+  $("#l-votes").innerHTML = list.map(v => {
+    const alreadyVoted = v.voters.includes(String(me.no));
+    let canVote = false;
+    if (v.status === 'รอโหวต' && !alreadyVoted) {
+      if (v.proposerPos === 'หัวหน้าเวร' && (me.isDuty || me.isLeader)) canVote = true;
+      if (v.proposerPos === 'หัวหน้าห้อง' && v.kind === 'ปรับ' && me.isDuty) canVote = true;
+      if (v.proposerPos === 'หัวหน้าห้อง' && v.kind === 'เก็บเงิน' && me.isPrivileged) canVote = true;
+    }
+    return `<div class="rw" style="cursor:default">
+      <div>
+        <b>[${esc(v.kind)}] ${esc(v.note)}</b> · <span style="color:#6c5ce7;font-weight:600">${baht(v.amt)}</span>
+        <div class="m">เสนอโดย: ${esc(v.proposerName)} (${esc(v.proposerPos)}) · วันที่ ${esc(v.date)}</div>
+        <div class="m">ผู้ถูกเรียกเก็บ: ${esc(v.targets)}</div>
+        <div class="m" style="color:#0984e3;font-weight:500">สถานะโหวต: ${esc(v.progressText)}</div>
+      </div>
+      <div class="r">
+        ${v.status === 'อนุมัติแล้ว' ? '<span class="bd ok">อนุมัติแล้ว</span>' :
+          canVote ? `<button class="btn sm ok" onclick="castVote(${v.id})">👍 โหวตเห็นชอบ / ยินยอม</button>` :
+          alreadyVoted ? '<span class="bd wait">คุณโหวตแล้ว</span>' : '<span class="bd">รอผู้มีสิทธิ์โหวต</span>'}
+      </div>
+    </div>`;
+  }).join("") || '<div class="m">ไม่มีรายการรอโหวตในขณะนี้</div>';
+}
+
+window.castVote = async id => {
+  if (!confirm("ยืนยันการโหวตเห็นชอบรายการนี้?")) return;
+  const r = await call("castVote", { ...AU(), id });
+  if (r.ok) {
+    alert(r.approved ? "🎉 คะแนนครบเกณฑ์แล้ว! บันทึกรายการลงยอดค้างชำระเรียบร้อย" : "✅ บันทึกเสียงโหวตของคุณเรียบร้อยแล้ว");
+    votes(); load();
+  } else alert(r.error);
+};
+
+/* ---------- เรียกเก็บเงิน / แจ้งปรับ ---------- */
 function chgForm() {
-  $("#v-chg").innerHTML = `<h3>🧾 เรียก/แจ้งชำระเงิน · แจ้งปรับ</h3><div class="op"><label><input type="radio" name="ck" value="เก็บเงิน" checked> เก็บเงิน</label><label><input type="radio" name="ck" value="ปรับ"> ปรับ</label></div>
-  <label>เลือกผู้ชำระ (เลือกได้หลายคน)</label><label style="color:var(--tx)"><input type="checkbox" id="cal"> ทุกคน</label><div style="max-height:150px;overflow:auto">${ST.map(s => `<label style="color:var(--tx);margin:2px 0"><input type="checkbox" class="cs" value="${esc(s.no)}"> ${esc(s.no)} · ${esc(s.name)}</label>`).join("")}</div>
-  <label>จำนวนเงิน (บาท)</label><input id="ca" type="number" inputmode="decimal"><label>ชำระภายใน (วัน)</label><input id="cg" type="number" value="7">
-  <div id="cf" class="hide"><label>หากไม่ชำระภายในกำหนด ให้ทบเงินทุก ๆ ... วัน (นับจากวันที่แจ้ง)</label><input id="cn" type="number" value="7"></div>
-  <div id="cm"></div><div class="er" id="ce"></div><button class="btn" id="cb">แจ้ง</button>`;
-  const k = () => document.querySelector("[name=ck]:checked").value, nm = () => {
-    const f = k() === "ปรับ"; $("#cf").classList.toggle("hide", !f);
-    $("#cm").innerHTML = f ? '<label>หมายเหตุ (กรอกเอง)</label><input id="ct">' : '<label>หมายเหตุ</label><select id="cs"><option>เงินรายสัปดาห์</option><option>เงินเฉพาะกิจกรรม</option></select><div id="cx" class="hide"><label>ระบุกิจกรรม (บังคับ)</label><input id="ct"></div>';
+  const onlyFine = me.isDuty; // หัวหน้าเวรปรับได้อย่างเดียว
+  const fixedFineRates = (me.isDuty || me.isLeader); // หัวหน้าเวรและหัวหน้าห้องปรับได้เฉพาะ 5-30 บาท
+
+  $("#v-chg").innerHTML = `<h3>🧾 เรียกเก็บเงิน · แจ้งปรับ</h3>
+    <div class="op">
+      ${onlyFine ? '' : '<label><input type="radio" name="ck" value="เก็บเงิน" checked> เก็บเงิน</label>'}
+      <label><input type="radio" name="ck" value="ปรับ" ${onlyFine ? 'checked' : ''}> ปรับ</label>
+    </div>
+    <label>เลือกผู้ชำระ (เลือกได้หลายคน)</label>
+    <label style="color:var(--tx)"><input type="checkbox" id="cal"> ทุกคน</label>
+    <div style="max-height:160px;overflow:auto;border:1px solid var(--ln);border-radius:12px;padding:8px 12px">${ST.map(s => `<label style="color:var(--tx);margin:4px 0"><input type="checkbox" class="cs" value="${esc(s.no)}"> ${esc(s.no)} · ${esc(s.name)}</label>`).join("")}</div>
+    <label>จำนวนเงิน (บาท)</label>
+    <div id="amt-box"></div>
+    <label>ชำระภายใน (วัน)</label><input id="cg" type="number" value="7">
+    <div id="cf" class="hide"><label>หากไม่ชำระภายในกำหนด ให้ทบเงินทุก ๆ ... วัน (นับจากวันที่แจ้ง)</label><input id="cn" type="number" value="7"></div>
+    <div id="cm"></div><div class="er" id="ce"></div><button class="btn" id="cb" style="margin-top:12px">ส่งรายการ</button>`;
+
+  const k = () => document.querySelector("[name=ck]:checked").value;
+  const renderAmtAndNote = () => {
+    const f = k() === "ปรับ";
+    $("#cf").classList.toggle("hide", !f);
+    if (f && fixedFineRates) {
+      $("#amt-box").innerHTML = `<select id="ca"><option value="5">5 บาท</option><option value="10">10 บาท</option><option value="15">15 บาท</option><option value="20">20 บาท</option><option value="25">25 บาท</option><option value="30">30 บาท</option></select>`;
+    } else {
+      $("#amt-box").innerHTML = `<input id="ca" type="number" inputmode="decimal" placeholder="ระบุจำนวนเงิน">`;
+    }
+    $("#cm").innerHTML = f
+      ? '<label>เหตุผลการปรับ (กรอกเอง)</label><input id="ct" placeholder="เช่น ไม่ทำเวร, มาสาย">'
+      : '<label>หมายเหตุ</label><select id="cs"><option>เงินรายสัปดาห์</option><option>เงินเฉพาะกิจกรรม</option></select><div id="cx" class="hide"><label>ระบุกิจกรรม (บังคับ)</label><input id="ct"></div>';
     if (!f) $("#cs").onchange = () => $("#cx").classList.toggle("hide", $("#cs").value !== "เงินเฉพาะกิจกรรม");
   };
-  document.querySelectorAll("[name=ck]").forEach(r => r.onchange = nm); nm();
+
+  document.querySelectorAll("[name=ck]").forEach(r => r.onchange = renderAmtAndNote);
+  renderAmtAndNote();
+
   $("#cal").onchange = e => document.querySelectorAll(".cs").forEach(c => c.checked = e.target.checked);
   $("#cb").onclick = async () => {
-    const f = k() === "ปรับ", t = $("#ct").value.trim(), who = $("#cal").checked ? "all" : [...document.querySelectorAll(".cs:checked")].map(c => c.value);
+    const f = k() === "ปรับ", t = $("#ct") ? $("#ct").value.trim() : "", who = $("#cal").checked ? "all" : [...document.querySelectorAll(".cs:checked")].map(c => c.value);
     const note = f ? t : $("#cs").value === "เงินรายสัปดาห์" ? "เงินรายสัปดาห์" : "เงินเฉพาะกิจกรรม: " + t;
     if (!who.length || !(+$("#ca").value > 0) || !note || (!f && $("#cs").value !== "เงินรายสัปดาห์" && !t)) return $("#ce").textContent = "กรอกให้ครบ (ผู้ชำระ จำนวนเงิน หมายเหตุ)";
     $("#cb").disabled = true; $("#ce").textContent = "กำลังบันทึก...";
     const r = await call("charge", { ...AU(), kind: k(), who, amt: $("#ca").value, grace: $("#cg").value, n: f ? $("#cn").value : 0, note });
-    $("#cb").disabled = false; $("#ce").textContent = r.ok ? "✅ แจ้งเรียบร้อย" : r.error; if (r.ok) load();
+    $("#cb").disabled = false;
+    $("#ce").style.color = r.ok ? "#117a49" : "#d63031";
+    $("#ce").textContent = r.ok ? r.msg : r.error;
+    if (r.ok) load();
   };
 }
-/* ---------- เอกสาร ---------- */
+
+/* ---------- เอกสาร / การบ้าน ---------- */
 const SUBJ = [["วิทยาการคำนวณ","ว31103"],["คอมพิวเตอร์","ว30265"],["ภาษาอังกฤษ","อ31102"],["ภาษาไทย","ท31102"],["ภาษาจีน","จ30202"],["คณิตศาสตร์พื้นฐาน","ค31102"],["คณิตศาสตร์เพิ่มเติม","ค30202"],["วิทยาศาสตร์เคมี","ว30221"],["วิทยาศาสตร์ชีวะ","ว30241"],["วิทยาศาสตร์ฟิสิกส์","ว30201"],["สุขศึกษา-พละ","พ31102"],["สังคมศึกษา","ส31102"],["พระพุทธศึกษา","ส31104"],["ภาษาอังกฤษเพิ่มเติม","อ30234"],["แนะแนว",""]];
 async function docs() {
   const r = await call("tasks", AU()), T = r.tasks || [];
-  $("#v-docs").innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><h3>📚 เอกสาร</h3><button class="btn" id="nt">➕ แจ้งงาน</button></div>` + SUBJ.map(([n, c], i) => `<button class="btn l chip" data-s="${esc(n)}">${esc(n)}${c ? " (" + c + ")" : ""} · ${T.filter(t => t.sj === n).length}</button>`).join("");
+  $("#v-docs").innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3>📚 เอกสาร / การบ้าน</h3><button class="btn" id="nt">➕ แจ้งงาน</button></div>` + SUBJ.map(([n, c]) => `<button class="btn l chip" data-s="${esc(n)}">${esc(n)}${c ? " (" + c + ")" : ""} · ${T.filter(t => t.sj === n).length}</button>`).join("");
   $("#v-docs").onclick = e => {
     const s = e.target.dataset.s; if (s == null) return;
     const l = T.filter(t => t.sj === s).sort((a, b) => a.due.localeCompare(b.due));
@@ -233,34 +439,39 @@ async function docs() {
     modal(`<h3>➕ แจ้งงาน</h3><label>ชื่อ-นามสกุล</label><input value="${esc(me.name)}" readonly><label>เลขที่</label><input value="${esc(me.no)}" readonly><label>วันที่</label><input type="date" id="td" value="${today()}">
     <label>วิชา</label><select id="tj"><option value="">เลือกวิชา</option>${SUBJ.map(s => `<option>${esc(s[0])}</option>`).join("")}</select><label>ทำที่ไหน</label><select id="ta"><option value="">เลือก</option><option>หนังสือ</option><option>ชีท</option><option>สมุด</option><option>แอป classroom</option></select>
     <label>หน้าที่</label><input id="tp"><label>วันครบกำหนดส่ง</label><input type="date" id="tu"><label>ส่งที่ไหน</label><input id="to"><label>หมายเหตุ (ไม่บังคับ)</label><input id="tn">
-    <div class="er" id="te"></div><div class="op" style="margin-top:10px"><button class="btn" id="tok" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
+    <div class="er" id="te"></div><div class="op" style="margin-top:14px"><button class="btn" id="tok" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
     const ok = () => { const np = ["สมุด", "แอป classroom"].includes($("#ta").value); $("#tp").disabled = np; if (np) $("#tp").value = ""; $("#tok").disabled = !($("#td").value && $("#tj").value && $("#ta").value && $("#tu").value && $("#to").value.trim() && (np || $("#tp").value.trim())); };
     $("#md").oninput = $("#md").onchange = ok;
     $("#tok").onclick = async () => { $("#tok").disabled = true; const r = await call("task", { ...AU(), date: $("#td").value, sj: $("#tj").value, at: $("#ta").value, pg: $("#tp").value, due: $("#tu").value, to: $("#to").value, note: $("#tn").value }); if (!r.ok) { $("#te").textContent = r.error; return ok(); } close(); docs(); };
   };
 }
+
 /* ---------- ตั้งค่า / ประวัติเข้าสู่ระบบ ---------- */
 function setForm() {
   $("#v-set").innerHTML = `<h3>⚙️ ตั้งค่า</h3><div class="m">${esc(me.name)} · ${esc(me.pos)} · เลขที่ ${esc(me.no)}</div><label>เปลี่ยนรหัสผ่านใหม่ (อย่างน้อย 4 ตัว)</label><input id="s1" type="password">
-  ${me.admin ? '<label>เปลี่ยนรหัสแอดมินใหม่ (อย่างน้อย 4 ตัว)</label><input id="s2" type="password">' : ""}<div class="er" id="se"></div><button class="btn" id="sb">บันทึก</button>`;
-  $("#sb").onclick = async () => { const a = $("#s1").value, b = $("#s2")?.value || ""; if (!a && !b) return $("#se").textContent = "ยังไม่ได้กรอกอะไร"; if ((a && a.length < 4) || (b && b.length < 4)) return $("#se").textContent = "ต้องอย่างน้อย 4 ตัว";
-    const r = await call("setpw", { ...AU(), npw: a, napw: b }); if (r.ok) { if (a) me.pw = a; if (b) me.apw = b; $("#s1").value = ""; if ($("#s2")) $("#s2").value = ""; } $("#se").style.color = r.ok ? "#157a4c" : "#d33"; $("#se").textContent = r.ok ? "✅ บันทึกแล้ว" : r.error; };
+  ${me.canAdmin ? '<label>เปลี่ยนรหัสแอดมินใหม่ (อย่างน้อย 4 ตัว)</label><input id="s2" type="password">' : ""}<div class="er" id="se"></div><button class="btn" id="sb" style="margin-top:12px">บันทึก</button>`;
+  $("#sb").onclick = async () => {
+    const a = $("#s1").value, b = $("#s2")?.value || ""; if (!a && !b) return $("#se").textContent = "ยังไม่ได้กรอกอะไร"; if ((a && a.length < 4) || (b && b.length < 4)) return $("#se").textContent = "ต้องอย่างน้อย 4 ตัว";
+    const r = await call("setpw", { ...AU(), npw: a, napw: b }); if (r.ok) { if (a) me.pw = a; if (b) me.apw = b; $("#s1").value = ""; if ($("#s2")) $("#s2").value = ""; } $("#se").style.color = r.ok ? "#117a49" : "#d63031"; $("#se").textContent = r.ok ? "✅ บันทึกแล้ว" : r.error;
+  };
 }
 async function logs() {
   const r = await call("logs", AU());
   $("#l-log").innerHTML = (r.logs || []).map(l => `<div class="rw" style="cursor:default"><div><b>${esc(l.name)}</b><div class="m">เลขที่ ${esc(l.sn)} · ${esc(l.pos)}</div></div><div class="r m">${esc(l.t)}</div></div>`).join("") || '<div class="m">ยังไม่มีประวัติ</div>';
 }
-/* ---------- แอดมิน: ดำเนินการเสร็จสิ้น ---------- */
+
+/* ---------- แอดมิน/เหรัญญิก: ดำเนินการเสร็จสิ้นคำร้อง ---------- */
 function approve(id) {
   const c = D.claims.find(x => x.id == id);
   modal(`<h3>✅ ดำเนินการเสร็จสิ้น</h3><label>คำร้องที่</label><input value="${esc(c.no)}" readonly><div class="m">${esc(c.name)} · ${baht(c.amt)}</div>
   <label>วันที่</label><input type="date" id="ad" value="${today()}"><label>แนบรูปหลักฐานการโอนเงินให้ผู้แจ้ง (บังคับ)</label><input type="file" id="asl" accept="image/*">
-  <div class="er" id="ae2"></div><div class="op" style="margin-top:10px"><button class="btn" id="as" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
+  <div class="er" id="ae2"></div><div class="op" style="margin-top:14px"><button class="btn" id="as" disabled>ตกลง</button><button class="btn l" onclick="close()">ยกเลิก</button></div>`);
   const ok = () => $("#as").disabled = !($("#ad").value && $("#asl").files[0]);
   $("#md").oninput = $("#md").onchange = ok;
   $("#as").onclick = async () => {
     $("#as").disabled = true; $("#ae2").textContent = "กำลังบันทึก...";
-    try { const r = await call("approve", { no: me.no, pw: me.pw, apw: me.apw, id, date: $("#ad").value, slip: await shrink($("#asl").files[0]) });
+    try {
+      const r = await call("approve", { ...AU(), id, date: $("#ad").value, slip: await shrink($("#asl").files[0]) });
       if (!r.ok) { $("#ae2").textContent = r.error; return ok(); }
       modal('<div class="ok2">🎉<br>สำเร็จ</div>'); setTimeout(() => { close(); view("claims"); }, 1400);
     } catch (e) { $("#ae2").textContent = "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง"; ok(); }
